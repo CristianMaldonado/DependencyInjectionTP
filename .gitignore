@@ -29,6 +29,11 @@ hs_err_pid*
 .vscode/
 bin/
 
+
+*~
+*.log*
+.temp
+
 # Si el Eclipse lo puso es por algo
-primavera/target/
+target/
 
