@@ -23,9 +23,10 @@
 hs_err_pid*
 
 # folders
-primavera/.settings
-primavera/.classpath
+.settings/
+.classpath/
 .vscode/
+bin/
 
 # Si el Eclipse lo puso es por algo
 primavera/target/
