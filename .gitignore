@@ -23,8 +23,9 @@
 hs_err_pid*
 
 # folders
+.project
 .settings/
-.classpath/
+.classpath
 .vscode/
 bin/
 
