@@ -11,4 +11,9 @@ public class AppTest {
 		assertTrue(true);
 	}
 
+	@Test
+	public void agrego_un_unit_test_para_probar_pull_requests() {
+		assertTrue(true);
+	}
+
 }
