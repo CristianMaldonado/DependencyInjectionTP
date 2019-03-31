@@ -21,7 +21,7 @@ public class FactoryTest {
         
         Object result = Factory.getObject(SampleClass.class);
 
-        assertEquals("Result object is an object of the same class", result.getClass(), SampleClass.class);
+        assertEquals(result.getClass(), SampleClass.class);
     }
 
     @Test
@@ -44,6 +44,6 @@ public class FactoryTest {
     @Test(expected = Exception.class)
     public void factory_throws_error_if_member_has_inject_but_class_is_not_component() {
 
-        BrokenClass result = (BrokenClass)Factory.getObject(BrokenClass.class);
+        Factory.getObject(BrokenClass.class);
     }
 }
