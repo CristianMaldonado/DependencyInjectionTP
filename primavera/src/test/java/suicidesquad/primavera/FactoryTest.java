@@ -1,6 +1,7 @@
 package suicidesquad.primavera;
 
 import org.junit.Test;
+import suicidesquad.primavera.src.Factory;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

@@ -1,8 +1,10 @@
 package suicidesquad.primavera;
 
+import suicidesquad.primavera.annotations.Injected;
+
 public class SampleClass {
     
-    // TODO: Should have @Inject attribute once created
+    @Injected
     public NestedClassComponent nestedClassComponent;
 
     public NestedClassNotComponent nestedClassNotComponent;

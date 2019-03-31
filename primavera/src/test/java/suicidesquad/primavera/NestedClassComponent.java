@@ -1,6 +1,8 @@
 package suicidesquad.primavera;
 
-// TODO: Should be decorated with the @Component attribute once created
+import suicidesquad.primavera.annotations.Component;
+
+@Component
 public class NestedClassComponent {
     
 }
