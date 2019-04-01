@@ -1,7 +1,9 @@
 package suicidesquad.primavera;
 
+import suicidesquad.primavera.annotations.Injected;
+
 public class BrokenClass {
 
-    // TODO: Should have @Inject attribute
+    @Injected
     public NestedClassNotComponent nestedClassNotComponent;
 }
