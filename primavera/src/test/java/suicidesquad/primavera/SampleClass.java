@@ -10,8 +10,21 @@ public class SampleClass {
 
     public NestedClassComponent componentNotInjected;
 
+    public List<String> listOfNotComponent;
+
+    public List<NestedClassComponent> listOfComponentNotInjected;
+
+    @Injected
+    public List<NestedClassComponent> listOfComponentEmpty;
+
     @Injected(count=4)
-    public List<NestedClassComponent> listOfComponent;
+    public List<NestedClassComponent> listOfComponentWithFourElements;
+
+    @Injected
+    public NestedClassComponent[] arrayOfComponentEmpty;
+
+    @Injected(count=8)
+    public NestedClassComponent[] arrayOfComponentWithEightElements;
 
     public NestedClassNotComponent notComponent;
 }

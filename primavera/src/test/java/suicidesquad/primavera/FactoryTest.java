@@ -48,15 +48,6 @@ public class FactoryTest {
         Assert.assertNull(result.componentNotInjected);
     }
 
-    @Test
-    public void factory_member_list_has_multiple_instances_with_injected_count() {
-
-        SampleClass result = (SampleClass)Factory.getObject(SampleClass.class);
-
-        Assert.assertNotNull(result.listOfComponent);
-        Assert.assertEquals(result.listOfComponent.size(), 4);
-    }
-
     // TODO: Define exception class in this case, maybe custom?
     @Test(expected = Exception.class)
     public void factory_throws_error_if_member_is_injected_but_not_component() {
