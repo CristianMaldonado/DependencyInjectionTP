@@ -4,13 +4,11 @@ import suicidesquad.primavera.src.Auto;
 import suicidesquad.primavera.src.Factory;
 
 public class App {
-	
+
 	public static void main(String[] args) {
 
 		Auto a = (Auto) Factory.getObject(Auto.class);
-		
+
 		System.out.println(a);
-		
 	}
 }
-
