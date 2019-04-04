@@ -9,7 +9,7 @@ public class Factory {
 
 		try {
 
-			// MG: Esto deberíamos hacerlo al final, ahora nos sirve a fines prácticos
+			// TODO: MG: Esto deberíamos hacerlo al final, ahora nos sirve a fines prácticos
 			Object instance = classType.newInstance();
 
 			for (Field field : classType.getDeclaredFields()) {
