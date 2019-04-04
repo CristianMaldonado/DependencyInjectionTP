@@ -22,8 +22,7 @@ public class ListTest {
         Assert.assertNull(result.listOfComponentNotInjected);
     }
 
-    // TODO: Define exception class in this case, maybe custom?
-    @Test(expected = Exception.class)
+    @Test(expected = RuntimeException.class)
     public void list_throws_error_if_injected_and_not_component() {
         // TODO: Implementation
     }
@@ -46,8 +45,7 @@ public class ListTest {
         Assert.assertEquals(result.listOfComponentWithFourElements.size(), 4);
     }
 
-    // TODO: Define exception class in this case, maybe custom?
-    @Test(expected = Exception.class)
+    @Test(expected = RuntimeException.class)
     public void list_throws_error_if_injected_and_component_but_implementation_is_not_specified() {
         // TODO: Implementation
     }
