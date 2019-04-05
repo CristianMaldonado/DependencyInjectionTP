@@ -5,16 +5,14 @@ import suicidesquad.primavera.annotations.Injected;
 public class Auto {
 
 	@Injected
-	private Rueda ruedas;
-	
-	public Rueda getRuedas() {
-		return this.ruedas;
+	private Rueda rueda;
+
+	public Rueda getRueda() {
+		return this.rueda;
 	}
 
 	@Override
 	public String toString() {
-		return "Auto [ruedas=" + ruedas + "]";
+		return "Auto [ruedas=" + rueda + "]";
 	}
-	
-	
 }

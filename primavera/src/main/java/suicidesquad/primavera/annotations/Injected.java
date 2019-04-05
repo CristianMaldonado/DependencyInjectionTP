@@ -16,6 +16,6 @@ import java.lang.annotation.Target;
 public @interface Injected {
 
 	int count() default 1;
-	Class<?> implementation() default Class.class;
-//	singleton();
+	Class<?> implementation() default Object.class;
+	boolean singleton() default false;
 }

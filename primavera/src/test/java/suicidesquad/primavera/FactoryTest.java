@@ -39,7 +39,7 @@ public class FactoryTest {
         Assert.assertNull(result.notComponent);
     }
 
-    // TODO: Me gustaría preguntar si este caso borde debería ser así
+    // TODO: Preguntar si este caso borde debería ser así
     @Test
     public void factory_member_is_null_if_it_is_not_injected_and_is_component() {
 
@@ -48,8 +48,7 @@ public class FactoryTest {
         Assert.assertNull(result.componentNotInjected);
     }
 
-    // TODO: Define exception class in this case, maybe custom?
-    @Test(expected = Exception.class)
+    @Test(expected = RuntimeException.class)
     public void factory_throws_error_if_member_is_injected_but_not_component() {
 
         Factory.getObject(BrokenClass.class);
