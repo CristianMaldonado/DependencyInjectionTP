@@ -1,7 +1,9 @@
-package suicidesquad.primavera;
+package suicidesquad.primavera.test;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import suicidesquad.primavera.model.SampleClass;
 import suicidesquad.primavera.src.Factory;
 
 public class ListTest {

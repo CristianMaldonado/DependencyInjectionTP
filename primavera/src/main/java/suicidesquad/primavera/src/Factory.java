@@ -5,7 +5,7 @@ import suicidesquad.primavera.model.Metadata;
 
 public class Factory {
 
-	public static Object getObject(Class<?> classType) {
+	public static Object getObject(Class<?> classType) throws RuntimeException {
 
 		try {
 
@@ -26,8 +26,9 @@ public class Factory {
 			return instance;
 
 		} catch (InstantiationException | IllegalAccessException e) {
-			e.printStackTrace();
-			return null;
+			// TODO Lo comento para que no moleste con los test, preguntar si hace falta o directamente sacarlo
+//			e.printStackTrace(); 
+			throw new RuntimeException();
 		}
 	}
 }
