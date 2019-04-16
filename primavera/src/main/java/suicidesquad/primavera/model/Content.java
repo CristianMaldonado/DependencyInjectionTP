@@ -4,12 +4,13 @@ public class Content {
 
 	private int id;
 	private Class<?> classType;
-	private int quantity;
+	private Metadata meta;
 	private Object instance;
 	
-	public Content(Class<?> classType, int quantity) {
+	public Content(Class<?> classType, Metadata meta) {
 		this.classType = classType;
-		this.quantity = quantity;
+		this.meta = meta;
+		this.id = IdGenerator.getNextId();
 	}
 	
 	public Object getNewInstance() {
@@ -28,14 +29,6 @@ public class Content {
 		this.classType = classType;
 	}
 
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
 	public Object getInstance() {
 		return instance;
 	}
@@ -51,7 +44,20 @@ public class Content {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
+	public Metadata getMeta() {
+		return meta;
+	}
+
+	public void setMeta(Metadata meta) {
+		this.meta = meta;
+	}
+
+	@Override
+	public String toString() {
+		return "Content [id=" + id + ", classType=" + classType + ", meta=" + meta + ", instance=" + instance + "]";
+	}
+
 	
 	
 }

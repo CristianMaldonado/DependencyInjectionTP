@@ -12,6 +12,10 @@ public class Leaf implements Comparable<Content>{
 		this.childs = new ArrayList<Leaf>();
 	}
 
+	public void addLeaf(Leaf newLeaf) {
+		this.childs.add(newLeaf);
+	}
+	
 	public Content getContent() {
 		return content;
 	}
@@ -32,5 +36,11 @@ public class Leaf implements Comparable<Content>{
 	public int compareTo(Content o) {
 		return this.content.getId() - o.getId();
 	}
+
+	@Override
+	public String toString() {
+		return "Leaf (content=" + content + ", childs=" + childs + ")";
+	}
+	
 	
 }

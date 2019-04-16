@@ -18,7 +18,8 @@ public class Factory {
 		this.stack = new Stack<Content>();
 	}
 	
-	public void addLeaf(Content contentLeaf, Content contentNewChild) {
+	
+	public void addToSpecificLeaf(Content contentLeaf, Content contentNewChild) {
 		Leaf aux = this.searchLeaf(contentLeaf);
 		aux.getChilds().add(new Leaf(contentNewChild));
 	}
@@ -28,7 +29,7 @@ public class Factory {
 		Queue<Leaf> queueAux = new LinkedList<Leaf>();
 		queueAux.add(root);
 		
-		while(queueAux.size() != 0) {
+		while(!queueAux.isEmpty()) {
 			Leaf leaf = queueAux.poll();
 			
 			if(leaf.compareTo(content) == 0) {
@@ -45,38 +46,67 @@ public class Factory {
 		
 		if(leaf != null) {
 			
-			this.stack.push(leaf.getContent());
+			if(!leaf.getChilds().isEmpty()) {
+				Content c = leaf.getContent();
+				this.stack.push(c); 
+			}
 			
 			for (Leaf child : leaf.getChilds()) {
 				leaf.setContent(this.postOrder(child));
 			}
-			Content lastLeaf = this.stack.pop();
-			lastLeaf.setInstance(leaf.getContent().getNewInstance());
-			return lastLeaf;
+			
+			if(!this.stack.isEmpty()) {				
+				Content lastLeafContent = this.stack.pop();
+				
+				lastLeafContent.setInstance(lastLeafContent.getNewInstance());
+				
+				try {
+					
+					lastLeafContent.getMeta().getField().setAccessible(true);
+					
+					lastLeafContent.getMeta().getField().set(lastLeafContent.getInstance(), leaf.getContent().getNewInstance());
+				
+				} catch (IllegalArgumentException | IllegalAccessException e) {
+
+					throw new RuntimeException();
+				}
+				
+				
+				return lastLeafContent;
+			} else {				
+				return leaf.getContent();
+			}
 		} else {
 			return this.root.getContent();
 		}
 	}
 	
-	public Object getObject(Class<?> classType) throws RuntimeException {
+	public Object getObject(Class<?> classType) {
 
-		this.root = new Leaf(new Content(classType, 1));
+		this.createTree(classType);
+		return this.postOrder(this.root).getNewInstance();
+
+	}
+	
+	
+	public void createTree(Class<?> classType) {
+		
+		this.root = new Leaf(new Content(classType, null));	
+		this.addLeaf(root, classType);
+	}
+
+	private void addLeaf(Leaf leaf, Class<?> classType) {
 		
 		for (Field field : classType.getDeclaredFields()) {
 
 			Metadata meta = new Metadata(field);
-
+		
 			if (meta.getInjected() && meta.getComponent()) {
-				
-				//Crear hoja y agregarla al arbol
-				
+				Leaf newLeaf = new Leaf(new Content(field.getType(), meta));
+				leaf.addLeaf(newLeaf);
+				this.addLeaf(newLeaf, field.getType());
 			}
 		}
-			
-			
-			
-
-		return this.postOrder(this.root).getInstance();
-
 	}
+	
 }

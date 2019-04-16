@@ -20,9 +20,12 @@ public class Metadata {
     private Class<?> implementation;
     private boolean component;
     private boolean singleton;
+    private Field field;
 
     private void initializeObject(Field field) {
 
+    	this.field = field;
+    	
         Injected injectedAnnotation = field.getAnnotation(Injected.class);
 
         if (injectedAnnotation == null)
@@ -42,7 +45,7 @@ public class Metadata {
         	Class<?> listclass = (Class<?>) listType.getActualTypeArguments()[0];
         	this.component = listclass.getAnnotation(Component.class) != null;
         } else {        	
-        	this.component = field.getAnnotation(Component.class) != null;
+        	this.component = field.getType().getAnnotation(Component.class) != null;
         }
     }
 
@@ -69,8 +72,16 @@ public class Metadata {
     public boolean getSingleton() {
         return singleton;
     }
+    
+    public Field getField() {
+		return field;
+	}
 
-    private static boolean isClassCollection(Class<?> c) {
+	public void setField(Field field) {
+		this.field = field;
+	}
+
+	private static boolean isClassCollection(Class<?> c) {
         return Collection.class.isAssignableFrom(c) || Map.class.isAssignableFrom(c) || c.isArray();
     }
 }
