@@ -1,6 +1,7 @@
 package suicidesquad.primavera.model;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 import java.util.Map;
 
@@ -35,7 +36,14 @@ public class Metadata {
         Class<?> fieldClass = field.getType();
 
         this.collection = isClassCollection(fieldClass);
-        this.component = fieldClass.getAnnotation(Component.class) != null;
+        
+        if(this.collection) {
+        	ParameterizedType listType = (ParameterizedType) field.getGenericType();
+        	Class<?> listclass = (Class<?>) listType.getActualTypeArguments()[0];
+        	this.component = listclass.getAnnotation(Component.class) != null;
+        } else {        	
+        	this.component = field.getAnnotation(Component.class) != null;
+        }
     }
 
     public boolean getCollection() {
