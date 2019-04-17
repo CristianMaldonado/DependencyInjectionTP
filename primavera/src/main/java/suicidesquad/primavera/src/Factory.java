@@ -81,9 +81,6 @@ public class Factory {
 		}
 	}
 	
-	
-	
-	
 	public void addToSpecificLeaf(Content contentLeaf, Content contentNewChild) {
 		Leaf aux = this.searchLeaf(contentLeaf);
 		aux.getChilds().add(new Leaf(contentNewChild));

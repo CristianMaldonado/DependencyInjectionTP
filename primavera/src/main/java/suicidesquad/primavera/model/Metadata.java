@@ -11,10 +11,15 @@ import suicidesquad.primavera.annotations.Injected;
 public class Metadata {
 
     public Metadata(Field field) {
+
+        this.field = field;
         initializeObject(field);
     }
 
-    private boolean collection;
+    private String name;
+    private Field field;
+    private boolean list;
+    private boolean array;
     private boolean injected;
     private int count;
     private Class<?> implementation;
@@ -22,7 +27,7 @@ public class Metadata {
     private boolean singleton;
 
     private void initializeObject(Field field) {
-    	
+
         Injected injectedAnnotation = field.getAnnotation(Injected.class);
 
         if (injectedAnnotation == null)
@@ -35,19 +40,27 @@ public class Metadata {
 
         Class<?> fieldClass = field.getType();
 
-        this.collection = isClassCollection(fieldClass);
-        
-        if(this.collection) {
-        	ParameterizedType listType = (ParameterizedType) field.getGenericType();
-        	Class<?> listclass = (Class<?>) listType.getActualTypeArguments()[0];
-        	this.component = listclass.getAnnotation(Component.class) != null;
-        } else {        	
-        	this.component = field.getType().getAnnotation(Component.class) != null;
+        this.list = isClassCollection(fieldClass);
+        this.array = fieldClass.isArray();
+
+        Class<?> type = field.getType();
+
+        if (this.list) {
+            ParameterizedType listType = (ParameterizedType) field.getGenericType();
+            type = (Class<?>) listType.getActualTypeArguments()[0];
+        } else if (this.array) {
+            type = field.getType().getComponentType();
         }
+
+        this.component = type.getAnnotation(Component.class) != null;
     }
 
     public boolean getCollection() {
-        return collection;
+        return array || list;
+    }
+
+    public String getName() {
+        return this.field.getName();
     }
 
     public boolean getInjected() {
@@ -69,8 +82,8 @@ public class Metadata {
     public boolean getSingleton() {
         return singleton;
     }
-    
-	private static boolean isClassCollection(Class<?> c) {
-        return Collection.class.isAssignableFrom(c) || Map.class.isAssignableFrom(c) || c.isArray();
+
+    private static boolean isClassCollection(Class<?> c) {
+        return Collection.class.isAssignableFrom(c) || Map.class.isAssignableFrom(c);
     }
 }
