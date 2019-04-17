@@ -1,12 +1,19 @@
 package suicidesquad.primavera.src;
 
 import suicidesquad.primavera.annotations.Component;
+import suicidesquad.primavera.annotations.Injected;
 
 @Component
 public class Rueda {
+	
+	@Injected
+	private Tornillo torillo;
 
 	@Override
 	public String toString() {
-		return "Soy una rueda";
+		return "Rueda [torillo=" + torillo + "]";
 	}
+
+
+
 }

@@ -4,18 +4,18 @@ public class Content {
 
 	private int id;
 	private Class<?> classType;
-	private Metadata meta;
 	private Object instance;
+	private String fieldName;
 	
-	public Content(Class<?> classType, Metadata meta) {
+	public Content(Class<?> classType, String fieldName) {
 		this.classType = classType;
-		this.meta = meta;
+		this.fieldName = fieldName;
 		this.id = IdGenerator.getNextId();
 	}
 	
-	public Object getNewInstance() {
+	public void newInstance() {
 		try {
-			return this.classType.newInstance();
+			this.instance = this.classType.newInstance();
 		} catch (InstantiationException | IllegalAccessException e) {
 			throw new RuntimeException();
 		}
@@ -44,20 +44,19 @@ public class Content {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public Metadata getMeta() {
-		return meta;
+	
+	public String getFieldName() {
+		return fieldName;
 	}
 
-	public void setMeta(Metadata meta) {
-		this.meta = meta;
+	public void setFieldName(String fieldName) {
+		this.fieldName = fieldName;
 	}
 
 	@Override
 	public String toString() {
-		return "Content [id=" + id + ", classType=" + classType + ", meta=" + meta + ", instance=" + instance + "]";
+		return "Content [id=" + id + ", classType=" + classType + ", instance=" + instance + ", fieldName=" + fieldName
+				+ "]";
 	}
-
-	
 	
 }

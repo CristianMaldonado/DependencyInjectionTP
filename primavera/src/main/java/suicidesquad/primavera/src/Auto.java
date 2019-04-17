@@ -6,6 +6,9 @@ public class Auto {
 
 	@Injected
 	private Rueda rueda;
+	
+	@Injected
+	private Puerta puerta;
 
 	public Rueda getRueda() {
 		return this.rueda;
@@ -13,6 +16,9 @@ public class Auto {
 
 	@Override
 	public String toString() {
-		return "Auto [ruedas=" + rueda + "]";
+		return "Auto [rueda=" + rueda + ", puerta=" + puerta + "]";
 	}
+
+
+
 }

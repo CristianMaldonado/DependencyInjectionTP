@@ -20,11 +20,8 @@ public class Metadata {
     private Class<?> implementation;
     private boolean component;
     private boolean singleton;
-    private Field field;
 
     private void initializeObject(Field field) {
-
-    	this.field = field;
     	
         Injected injectedAnnotation = field.getAnnotation(Injected.class);
 
@@ -73,14 +70,6 @@ public class Metadata {
         return singleton;
     }
     
-    public Field getField() {
-		return field;
-	}
-
-	public void setField(Field field) {
-		this.field = field;
-	}
-
 	private static boolean isClassCollection(Class<?> c) {
         return Collection.class.isAssignableFrom(c) || Map.class.isAssignableFrom(c) || c.isArray();
     }

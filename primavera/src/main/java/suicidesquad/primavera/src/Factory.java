@@ -17,6 +17,73 @@ public class Factory {
 	public Factory() {
 		this.stack = new Stack<Content>();
 	}
+
+	private void postOrder(Leaf leaf) {
+		
+		if(leaf != null) {
+			
+			for (Leaf child : leaf.getChilds()) {
+				
+				this.stack.push(leaf.getContent());
+				
+				this.postOrder(child);
+			}
+			
+			if(!this.stack.isEmpty()) {
+				Content lastLeafContent = this.stack.pop();
+				
+				lastLeafContent.newInstance(); //Crea tu instancia
+				leaf.getContent().newInstance();// Crea la instancia del hijo
+				Object childInstance = leaf.getContent().getInstance(); // Dame la instancia del hijo
+
+				//Asigna la instancia del hijo al atributo del padre
+				
+				for (Field field : lastLeafContent.getClassType().getDeclaredFields()) {
+					if(field.getName().equals(leaf.getContent().getFieldName())) {
+						try {
+							field.setAccessible(true);
+							field.set(lastLeafContent.getInstance(), childInstance);
+							
+						} catch (IllegalArgumentException | IllegalAccessException e) {
+							throw new RuntimeException();
+						}
+					}
+				}
+				
+			}
+		}
+	}
+	
+	public Object getObject(Class<?> classType) {
+
+		this.createTree(classType);
+		this.postOrder(root);
+		return root.getContent().getInstance();
+
+	}
+	
+	
+	public void createTree(Class<?> classType) {
+		
+		this.root = new Leaf(new Content(classType, "Root"));	
+		this.addLeaf(root, classType);
+	}
+
+	private void addLeaf(Leaf leaf, Class<?> classType) {
+		
+		for (Field field : classType.getDeclaredFields()) {
+
+			Metadata meta = new Metadata(field);
+		
+			if (meta.getInjected() && meta.getComponent()) { //Si el atributo tiene Injected y la clase del atributo tiene Component
+				Leaf newLeaf = new Leaf(new Content(field.getType(), field.getName())); // Instancio nueva Hoja pasando la clase del atributo 
+				leaf.addLeaf(newLeaf); // Agrego la hoja como hijo de la hoja anterior
+				this.addLeaf(newLeaf, field.getType()); // Llamo de nuevo con el hijo recien agregado
+			}
+		}
+	}
+	
+	
 	
 	
 	public void addToSpecificLeaf(Content contentLeaf, Content contentNewChild) {
@@ -40,73 +107,6 @@ public class Factory {
 		}
 		
 		return null;
-	}
-
-	private Content postOrder(Leaf leaf) {
-		
-		if(leaf != null) {
-			
-			if(!leaf.getChilds().isEmpty()) {
-				Content c = leaf.getContent();
-				this.stack.push(c); 
-			}
-			
-			for (Leaf child : leaf.getChilds()) {
-				leaf.setContent(this.postOrder(child));
-			}
-			
-			if(!this.stack.isEmpty()) {				
-				Content lastLeafContent = this.stack.pop();
-				
-				lastLeafContent.setInstance(lastLeafContent.getNewInstance());
-				
-				try {
-					
-					lastLeafContent.getMeta().getField().setAccessible(true);
-					
-					lastLeafContent.getMeta().getField().set(lastLeafContent.getInstance(), leaf.getContent().getNewInstance());
-				
-				} catch (IllegalArgumentException | IllegalAccessException e) {
-
-					throw new RuntimeException();
-				}
-				
-				
-				return lastLeafContent;
-			} else {				
-				return leaf.getContent();
-			}
-		} else {
-			return this.root.getContent();
-		}
-	}
-	
-	public Object getObject(Class<?> classType) {
-
-		this.createTree(classType);
-		return this.postOrder(this.root).getNewInstance();
-
-	}
-	
-	
-	public void createTree(Class<?> classType) {
-		
-		this.root = new Leaf(new Content(classType, null));	
-		this.addLeaf(root, classType);
-	}
-
-	private void addLeaf(Leaf leaf, Class<?> classType) {
-		
-		for (Field field : classType.getDeclaredFields()) {
-
-			Metadata meta = new Metadata(field);
-		
-			if (meta.getInjected() && meta.getComponent()) {
-				Leaf newLeaf = new Leaf(new Content(field.getType(), meta));
-				leaf.addLeaf(newLeaf);
-				this.addLeaf(newLeaf, field.getType());
-			}
-		}
 	}
 	
 }
