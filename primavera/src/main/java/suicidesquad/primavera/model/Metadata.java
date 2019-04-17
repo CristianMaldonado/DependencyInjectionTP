@@ -16,15 +16,15 @@ public class Metadata {
         initializeObject(field);
     }
 
-    private String name;
     private Field field;
     private boolean list;
     private boolean array;
     private boolean injected;
     private int count;
-    private Class<?> implementation;
     private boolean component;
     private boolean singleton;
+    private Class<?> type;
+    private Class<?> implementation;
 
     private void initializeObject(Field field) {
 
@@ -43,13 +43,13 @@ public class Metadata {
         this.list = isClassCollection(fieldClass);
         this.array = fieldClass.isArray();
 
-        Class<?> type = field.getType();
+        this.type = field.getType();
 
         if (this.list) {
             ParameterizedType listType = (ParameterizedType) field.getGenericType();
-            type = (Class<?>) listType.getActualTypeArguments()[0];
+            this.type = (Class<?>) listType.getActualTypeArguments()[0];
         } else if (this.array) {
-            type = field.getType().getComponentType();
+            this.type = field.getType().getComponentType();
         }
 
         this.component = type.getAnnotation(Component.class) != null;
