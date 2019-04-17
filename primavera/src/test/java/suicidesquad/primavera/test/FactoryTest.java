@@ -1,7 +1,10 @@
-package suicidesquad.primavera;
+package suicidesquad.primavera.test;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import suicidesquad.primavera.model.CanNotInstantiateClass;
+import suicidesquad.primavera.model.SampleClass;
 import suicidesquad.primavera.src.Factory;
 
 public class FactoryTest {
@@ -49,8 +52,8 @@ public class FactoryTest {
     }
 
     @Test(expected = RuntimeException.class)
-    public void factory_throws_error_if_member_is_injected_but_not_component() {
+    public void factory_throws_excepcion_if_can_not_instantiate_object() {
 
-        Factory.getObject(BrokenClass.class);
+        Factory.getObject(CanNotInstantiateClass.class);
     }
 }

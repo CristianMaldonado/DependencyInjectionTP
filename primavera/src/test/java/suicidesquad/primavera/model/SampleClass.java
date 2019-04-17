@@ -1,4 +1,4 @@
-package suicidesquad.primavera;
+package suicidesquad.primavera.model;
 
 import java.util.List;
 import suicidesquad.primavera.annotations.Injected;
