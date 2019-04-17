@@ -57,7 +57,6 @@ public class Factory {
 		this.createTree(classType);
 		this.postOrder(root);
 		return root.getContent().getInstance();
-
 	}
 	
 	

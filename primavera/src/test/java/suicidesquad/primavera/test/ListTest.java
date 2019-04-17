@@ -3,7 +3,7 @@ package suicidesquad.primavera.test;
 import org.junit.Assert;
 import org.junit.Test;
 
-import suicidesquad.primavera.model.SampleClass;
+import suicidesquad.primavera.model.*;
 import suicidesquad.primavera.src.Factory;
 
 public class ListTest {
@@ -11,7 +11,7 @@ public class ListTest {
     @Test
     public void list_is_null_if_not_injected_nor_component() {
 
-        SampleClass result = (SampleClass)new Factory().getObject(SampleClass.class);
+        SampleClassList result = (SampleClassList)new Factory().getObject(SampleClassList.class);
 
         Assert.assertNull(result.listOfComponentWithFourElements);
     }
@@ -19,7 +19,7 @@ public class ListTest {
     @Test
     public void list_is_null_if_not_injected_and_component() {
 
-        SampleClass result = (SampleClass)new Factory().getObject(SampleClass.class);
+        SampleClassList result = (SampleClassList)new Factory().getObject(SampleClassList.class);
 
         Assert.assertNull(result.listOfComponentNotInjected);
     }
@@ -32,7 +32,7 @@ public class ListTest {
     @Test
     public void list_is_not_null_if_injected_and_component_without_count() {
 
-        SampleClass result = (SampleClass)new Factory().getObject(SampleClass.class);
+        SampleClassList result = (SampleClassList)new Factory().getObject(SampleClassList.class);
 
         Assert.assertNotNull(result.listOfComponentWithFourElements);
         Assert.assertEquals(result.listOfComponentWithFourElements.size(), 0);
@@ -41,7 +41,7 @@ public class ListTest {
     @Test
     public void list_has_multiple_instances_if_injected_and_component_with_count() {
 
-        SampleClass result = (SampleClass)new Factory().getObject(SampleClass.class);
+        SampleClassList result = (SampleClassList)new Factory().getObject(SampleClassList.class);
 
         Assert.assertNotNull(result.listOfComponentWithFourElements);
         Assert.assertEquals(result.listOfComponentWithFourElements.size(), 4);
@@ -60,7 +60,7 @@ public class ListTest {
     @Test
     public void list_has_multiple_instances_if_injected_and_component_with_count_implementation_is_specified() {
         
-        SampleClass result = (SampleClass)new Factory().getObject(SampleClass.class);
+        SampleClassList result = (SampleClassList)new Factory().getObject(SampleClassList.class);
 
         Assert.assertNotNull(result.listOfComponentWithFourElements);
         Assert.assertEquals(result.listOfComponentWithFourElements.size(), 4);
