@@ -22,23 +22,19 @@ public class Factory {
 		
 		if(leaf != null) {
 			
+			leaf.getContent().newInstance();
+			
 			for (Leaf child : leaf.getChilds()) {
 				
 				this.stack.push(leaf.getContent());
-				
 				this.postOrder(child);
 			}
 			
 			if(!this.stack.isEmpty()) {
+				
 				Content lastLeafContent = this.stack.pop();
 				
-				lastLeafContent.newInstance(); //Crea tu instancia
-				//TODO : Es un bug, cuando pasa a la siguiente vuelta de la recursividad, al crear la instancia, me pisa la anterior antes de asignarla al padre
-				leaf.getContent().newInstance();// Crea la instancia del hijo
-				
-				Object childInstance = leaf.getContent().getInstance(); // Dame la instancia del hijo
-
-				//Asigna la instancia del hijo al atributo del padre
+				Object childInstance = leaf.getContent().getInstance();
 				
 				for (Field field : lastLeafContent.getClassType().getDeclaredFields()) {
 					if(field.getName().equals(leaf.getContent().getFieldName())) {
