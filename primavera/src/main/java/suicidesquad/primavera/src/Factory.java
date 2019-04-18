@@ -12,13 +12,8 @@ import suicidesquad.primavera.model.Metadata;
 public class Factory {
 
 	private Leaf root;
-	private Stack<Content> stack;
 
-	public Factory() {
-		this.stack = new Stack<Content>();
-	}
-
-	private void postOrder(Leaf leaf) {
+	private void postOrder(Leaf leaf, Stack<Content> stack) {
 
 		if (leaf != null) {
 
@@ -26,13 +21,13 @@ public class Factory {
 
 			for (Leaf child : leaf.getChilds()) {
 
-				this.stack.push(leaf.getContent());
-				this.postOrder(child);
+				stack.push(leaf.getContent());
+				this.postOrder(child, stack);
 			}
 
-			if (!this.stack.isEmpty()) {
+			if (!stack.isEmpty()) {
 
-				Content lastLeafContent = this.stack.pop();	
+				Content lastLeafContent = stack.pop();	
 				Object childInstance = leaf.getContent().getInstance();
 
 				for (Field field : lastLeafContent.getClassType().getDeclaredFields()) {
@@ -51,11 +46,12 @@ public class Factory {
 		}
 	}
 
-	public Object getObject(Class<?> classType) {
+	public <T> T getObject(Class<?> classType) {
+		Stack<Content> stack = new Stack<Content>();;
 
 		this.createTree(classType);
-		this.postOrder(root);
-		return root.getContent().getInstance();
+		this.postOrder(root, stack);
+		return (T) (root.getContent()).getInstance();
 	}
 
 	public void createTree(Class<?> classType) {
