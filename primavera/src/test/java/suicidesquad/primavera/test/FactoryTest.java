@@ -12,7 +12,7 @@ public class FactoryTest {
     @Test
     public void factory_returns_new_instance() {
 
-        Object result = new Factory().getObject(SampleClass.class);
+        SampleClass result = Factory.getObject(SampleClass.class);
 
         Assert.assertNotNull(result);
     }
@@ -20,7 +20,7 @@ public class FactoryTest {
     @Test
     public void factory_returns_requested_class() {
         
-        Object result = new Factory().getObject(SampleClass.class);
+        SampleClass result = Factory.getObject(SampleClass.class);
 
         Assert.assertEquals(result.getClass(), SampleClass.class);
     }
@@ -28,7 +28,7 @@ public class FactoryTest {
     @Test
     public void factory_can_instantiate_child_member() {
 
-        SampleClass result = (SampleClass)new Factory().getObject(SampleClass.class);
+        SampleClass result = Factory.getObject(SampleClass.class);
 
         Assert.assertNotNull(result.component);
     }
@@ -37,7 +37,7 @@ public class FactoryTest {
     @Test
     public void factory_member_is_null_if_it_is_not_injected_nor_component() {
 
-        SampleClass result = (SampleClass)new Factory().getObject(SampleClass.class);
+        SampleClass result = Factory.getObject(SampleClass.class);
 
         Assert.assertNull(result.notComponent);
     }
@@ -46,7 +46,7 @@ public class FactoryTest {
     @Test
     public void factory_member_is_null_if_it_is_not_injected_and_is_component() {
 
-        SampleClass result = (SampleClass)new Factory().getObject(SampleClass.class);
+        SampleClass result = Factory.getObject(SampleClass.class);
 
         Assert.assertNull(result.componentNotInjected);
     }
@@ -54,6 +54,6 @@ public class FactoryTest {
     @Test(expected = RuntimeException.class)
     public void factory_throws_excepcion_if_can_not_instantiate_object() {
 
-    	new Factory().getObject(CanNotInstantiateClass.class);
+    	Factory.getObject(CanNotInstantiateClass.class);
     }
 }

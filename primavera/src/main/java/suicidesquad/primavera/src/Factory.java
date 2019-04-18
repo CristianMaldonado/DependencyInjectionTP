@@ -11,9 +11,7 @@ import suicidesquad.primavera.model.Metadata;
 
 public class Factory {
 
-	private Leaf root;
-
-	private void postOrder(Leaf leaf, Stack<Content> stack) {
+	private static void postOrder(Leaf leaf, Stack<Content> stack) {
 
 		if (leaf != null) {
 
@@ -22,7 +20,7 @@ public class Factory {
 			for (Leaf child : leaf.getChilds()) {
 
 				stack.push(leaf.getContent());
-				this.postOrder(child, stack);
+				postOrder(child, stack);
 			}
 
 			if (!stack.isEmpty()) {
@@ -46,21 +44,24 @@ public class Factory {
 		}
 	}
 
-	public <T> T getObject(Class<?> classType) {
+	public static <T> T getObject(Class<?> classType) {
+
+		Leaf root = createTree(classType);
 		Stack<Content> stack = new Stack<Content>();;
 
-		this.createTree(classType);
-		this.postOrder(root, stack);
+		postOrder(root, stack);
 		return (T) (root.getContent()).getInstance();
 	}
 
-	public void createTree(Class<?> classType) {
+	public static Leaf createTree(Class<?> classType) {
 
-		this.root = new Leaf(new Content(classType, "Root"));
-		this.addLeaf(root, classType);
+		Leaf root = new Leaf(new Content(classType, "Root"));
+		addLeaf(root, classType);
+
+		return root;
 	}
 
-	private void addLeaf(Leaf leaf, Class<?> classType) {
+	private static void addLeaf(Leaf leaf, Class<?> classType) {
 
 		for (Field field : classType.getDeclaredFields()) {
 
@@ -72,18 +73,19 @@ public class Factory {
 
 					Leaf newLeaf = new Leaf(new Content(field.getType(), field.getName()));
 					leaf.addLeaf(newLeaf);
-					this.addLeaf(newLeaf, field.getType());
+					
+					addLeaf(newLeaf, field.getType());
 				}
 			}
 		}
 	}
 
-	public void addToSpecificLeaf(Content contentLeaf, Content contentNewChild) {
-		Leaf aux = this.searchLeaf(contentLeaf);
+	public void addToSpecificLeaf(Content contentLeaf, Content contentNewChild, Leaf root) {
+		Leaf aux = this.searchLeaf(contentLeaf, root);
 		aux.getChilds().add(new Leaf(contentNewChild));
 	}
 
-	public Leaf searchLeaf(Content content) {
+	public Leaf searchLeaf(Content content, Leaf root) {
 
 		Queue<Leaf> queueAux = new LinkedList<Leaf>();
 		queueAux.add(root);
