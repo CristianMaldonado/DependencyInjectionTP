@@ -14,4 +14,7 @@ public class SampleClassList {
 
     @Injected(count=4)
     public List<NestedClassComponent> listOfComponentWithFourElements;
+
+    @Injected(implementation = FirstSample.class)
+    public List<Sample> listOfFirstSampleWithoutCount;
 }

@@ -26,7 +26,10 @@ public class ListTest {
 
     @Test(expected = RuntimeException.class)
     public void list_throws_error_if_injected_and_not_component() {
-        // TODO: Implementation
+
+        Factory.getObject(BrokenClassList.class);
+
+        Assert.fail("Library should have thrown an exception, because NestedClassNotComponent is injected but not labeled as component.");
     }
 
     @Test
@@ -49,12 +52,20 @@ public class ListTest {
 
     @Test(expected = RuntimeException.class)
     public void list_throws_error_if_injected_and_component_but_implementation_is_not_specified() {
-        // TODO: Implementation
+        
+        Factory.getObject(BrokenClassImplementationList.class);
+        
+        Assert.fail("Library should have thrown an exception, because Sample is an interface and no concrete implementation is specified.");
     }
 
     @Test
     public void list_is_not_null_if_injected_and_component_without_count_with_implementation() {
-        // TODO: Implementation
+
+        SampleClassList result = Factory.getObject(SampleClassList.class);
+        
+        Assert.assertNotNull(result);
+        Assert.assertNotNull(result.listOfFirstSampleWithoutCount);
+        Assert.assertTrue(result.listOfFirstSampleWithoutCount.size() == 0);
     }
 
     @Test
