@@ -65,7 +65,7 @@ public class ListTest {
         
         Assert.assertNotNull(result);
         Assert.assertNotNull(result.listOfFirstSampleWithoutCount);
-        Assert.assertTrue(result.listOfFirstSampleWithoutCount.size() == 0);
+        Assert.assertTrue("Sequence should not contain any element.", result.listOfFirstSampleWithoutCount.size() == 0);
     }
 
     @Test
