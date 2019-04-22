@@ -2,15 +2,13 @@ package suicidesquad.primavera.model;
 
 public class Content {
 
-	private int id;
 	private Class<?> classType;
 	private Object instance;
-	private String fieldName;
+	private Metadata meta;
 	
-	public Content(Class<?> classType, String fieldName) {
-		this.classType = classType;
-		this.fieldName = fieldName;
-		this.id = IdGenerator.getNextId();
+	public Content(Metadata meta) {
+		this.classType = meta.getFieldType();
+		this.meta = meta;
 	}
 	
 	public void newInstance() {
@@ -37,26 +35,18 @@ public class Content {
 		this.instance = instance;
 	}
 
-	public int getId() {
-		return id;
+	public Metadata getMeta() {
+		return meta;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-	public String getFieldName() {
-		return fieldName;
-	}
-
-	public void setFieldName(String fieldName) {
-		this.fieldName = fieldName;
+	public void setMeta(Metadata meta) {
+		this.meta = meta;
 	}
 
 	@Override
 	public String toString() {
-		return "Content [id=" + id + ", classType=" + classType + ", instance=" + instance + ", fieldName=" + fieldName
-				+ "]";
+		return "Content [classType=" + classType + ", instance=" + instance + ", meta=" + meta + "]";
 	}
 	
+
 }

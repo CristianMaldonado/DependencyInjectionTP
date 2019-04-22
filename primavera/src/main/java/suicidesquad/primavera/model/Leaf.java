@@ -1,8 +1,9 @@
 package suicidesquad.primavera.model;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
-public class Leaf implements Comparable<Content>{
+public class Leaf {
 
 	private Content content;
 	private ArrayList<Leaf> childs;
@@ -31,11 +32,29 @@ public class Leaf implements Comparable<Content>{
 	public void setChilds(ArrayList<Leaf> childs) {
 		this.childs = childs;
 	}
+	
+	public void showTree() {
+		
+		int nivel = 0;
+		Stack<Leaf> stack = new Stack<Leaf>();
+		
+		stack.push(this);
+		
+		while(!stack.isEmpty()) {
+			Leaf leaf = stack.pop();
+			System.out.println("Nivel: " + nivel);
+			
+			System.out.println("Clase: " + leaf.getContent().getClassType().toString());
+			
 
-	@Override
-	public int compareTo(Content o) {
-		return this.content.getId() - o.getId();
+			if(!leaf.getChilds().isEmpty()) {
+				nivel++;
+			}
+			
+			leaf.getChilds().forEach((child) -> stack.push(child));
+		}
 	}
+	
 
 	@Override
 	public String toString() {

@@ -2,7 +2,9 @@ package suicidesquad.primavera.model;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import suicidesquad.primavera.annotations.Component;
@@ -10,6 +12,10 @@ import suicidesquad.primavera.annotations.Injected;
 
 public class Metadata {
 
+	public Metadata(Class<?> fieldType) { 
+		this.fieldType = fieldType; 
+	}
+	
     public Metadata(Field field) {
 
         this.field = field;
@@ -23,9 +29,10 @@ public class Metadata {
     private int count;
     private boolean component;
     private boolean singleton;
-    private Class<?> type;
+    private Class<?> fieldType;
     private Class<?> implementation;
-
+    private ArrayList<Object> newList;
+    
     private void initializeObject(Field field) {
 
         Injected injectedAnnotation = field.getAnnotation(Injected.class);
@@ -43,16 +50,17 @@ public class Metadata {
         this.list = isClassCollection(fieldClass);
         this.array = fieldClass.isArray();
 
-        this.type = field.getType();
+        this.fieldType = field.getType();
 
         if (this.list) {
             ParameterizedType listType = (ParameterizedType) field.getGenericType();
-            this.type = (Class<?>) listType.getActualTypeArguments()[0];
+            this.fieldType = (Class<?>) listType.getActualTypeArguments()[0];
+            this.newList = new ArrayList<>();
         } else if (this.array) {
-            this.type = field.getType().getComponentType();
+            this.fieldType = field.getType().getComponentType();
         }
 
-        this.component = type.getAnnotation(Component.class) != null;
+        this.component = fieldType.getAnnotation(Component.class) != null;
     }
 
     public boolean getCollection() {
@@ -65,6 +73,10 @@ public class Metadata {
 
     public boolean getInjected() {
         return injected;
+    }
+    
+    public Class<?> getFieldType() {
+    	return this.fieldType;
     }
 
     public int getCount() {
@@ -81,6 +93,10 @@ public class Metadata {
 
     public boolean getSingleton() {
         return singleton;
+    }
+    
+    public List<Object> getNewList() {
+    	return this.newList;
     }
 
     private static boolean isClassCollection(Class<?> c) {

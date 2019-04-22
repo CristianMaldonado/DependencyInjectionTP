@@ -7,7 +7,7 @@ public class App {
 
 	public static void main(String[] args) {
 
-		Auto a = new Factory().getObject(Auto.class);
+		Auto a = Factory.getObject(Auto.class);
 
 		System.out.println(a);
 	}
