@@ -2,30 +2,25 @@ package suicidesquad.primavera.model;
 
 public class Content {
 
-	private Class<?> classType;
 	private Object instance;
 	private Metadata meta;
 	
 	public Content(Metadata meta) {
-		this.classType = meta.getFieldType();
 		this.meta = meta;
 	}
 	
 	public void newInstance() {
 		try {
-			this.instance = this.classType.newInstance();
+			this.instance = this.meta.getFieldClass().newInstance();
 		} catch (InstantiationException | IllegalAccessException e) {
 			throw new RuntimeException();
 		}
 	}
-
-	public Class<?> getClassType() {
-		return classType;
+	
+	public void createObject() {
+		
 	}
 
-	public void setClassType(Class<?> classType) {
-		this.classType = classType;
-	}
 
 	public Object getInstance() {
 		return instance;
@@ -45,7 +40,7 @@ public class Content {
 
 	@Override
 	public String toString() {
-		return "Content [classType=" + classType + ", instance=" + instance + ", meta=" + meta + "]";
+		return "Content [instance=" + instance + ", meta=" + meta + "]";
 	}
 	
 

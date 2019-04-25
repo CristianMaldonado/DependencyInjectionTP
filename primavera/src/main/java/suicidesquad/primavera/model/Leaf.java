@@ -44,7 +44,7 @@ public class Leaf {
 			Leaf leaf = stack.pop();
 			System.out.println("Nivel: " + nivel);
 			
-			System.out.println("Clase: " + leaf.getContent().getClassType().toString());
+			System.out.println("Clase: " + leaf.getContent().getMeta().getFieldClass().toString());
 			
 
 			if(!leaf.getChilds().isEmpty()) {

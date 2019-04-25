@@ -37,10 +37,11 @@ public class Factory {
 
 			if (!stack.isEmpty()) {
 
-				Content lastLeafContent = stack.pop();	
+				Content lastLeafContent = stack.pop();
+				
 				Object childInstance = leaf.getContent().getInstance();
 
-				for (Field field : lastLeafContent.getClassType().getDeclaredFields()) {
+				for (Field field : lastLeafContent.getMeta().getFieldClass().getDeclaredFields()) {
 
 					if (field.getName().equals(leaf.getContent().getMeta().getName())) {
 						try {
@@ -49,7 +50,7 @@ public class Factory {
 							
 							field.setAccessible(true);
 							
-							if(leaf.getContent().getMeta().getCollection()) { 
+							if(leaf.getContent().getMeta().isCollection()) { 
 												
 								List<Object> newList = new ArrayList<Object>();
 								
@@ -87,14 +88,14 @@ public class Factory {
 
 			Metadata meta = new Metadata(field);
 
-			if (meta.getInjected() && meta.getComponent()) {
+			if (meta.isInjected() && meta.isComponent()) {
 							
 				for (int i = 0; i < meta.getCount(); i++) {
 
 					Leaf newLeaf = new Leaf(new Content(meta));
 					leaf.addLeaf(newLeaf);
 					
-					addLeaf(newLeaf, meta.getFieldType());
+					addLeaf(newLeaf, meta.getFieldClass());
 				}
 			}
 		}

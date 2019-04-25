@@ -13,7 +13,7 @@ import suicidesquad.primavera.annotations.Injected;
 public class Metadata {
 
 	public Metadata(Class<?> fieldType) { 
-		this.fieldType = fieldType; 
+		this.fieldClass = fieldType; 
 	}
 	
     public Metadata(Field field) {
@@ -29,9 +29,9 @@ public class Metadata {
     private int count;
     private boolean component;
     private boolean singleton;
-    private Class<?> fieldType;
+    private Class<?> fieldClass;
     private Class<?> implementation;
-    private ArrayList<Object> newList;
+    private ObjectType objectType;
     
     private void initializeObject(Field field) {
 
@@ -45,25 +45,22 @@ public class Metadata {
         this.implementation = injectedAnnotation.implementation();
         this.singleton = injectedAnnotation.singleton();
 
-        Class<?> fieldClass = field.getType();
+        this.list = isClassCollection(field.getType());
+        this.array = field.getType().isArray();
 
-        this.list = isClassCollection(fieldClass);
-        this.array = fieldClass.isArray();
-
-        this.fieldType = field.getType();
+        this.objectType = new SimpleObject(field);
 
         if (this.list) {
-            ParameterizedType listType = (ParameterizedType) field.getGenericType();
-            this.fieldType = (Class<?>) listType.getActualTypeArguments()[0];
-            this.newList = new ArrayList<>();
+            this.objectType = new ListObject(field);
         } else if (this.array) {
-            this.fieldType = field.getType().getComponentType();
+            this.objectType = new ArrayObject(field);
         }
 
-        this.component = fieldType.getAnnotation(Component.class) != null;
+        this.fieldClass = this.objectType.getFieldClass();
+        this.component = fieldClass.getAnnotation(Component.class) != null;
     }
 
-    public boolean getCollection() {
+    public boolean isCollection() {
         return array || list;
     }
 
@@ -71,12 +68,12 @@ public class Metadata {
         return this.field.getName();
     }
 
-    public boolean getInjected() {
+    public boolean isInjected() {
         return injected;
     }
     
-    public Class<?> getFieldType() {
-    	return this.fieldType;
+    public Class<?> getFieldClass() {
+    	return this.fieldClass;
     }
 
     public int getCount() {
@@ -87,17 +84,14 @@ public class Metadata {
         return implementation;
     }
 
-    public boolean getComponent() {
+    public boolean isComponent() {
         return component;
     }
 
-    public boolean getSingleton() {
+    public boolean isSingleton() {
         return singleton;
     }
-    
-    public List<Object> getNewList() {
-    	return this.newList;
-    }
+
 
     private static boolean isClassCollection(Class<?> c) {
         return Collection.class.isAssignableFrom(c) || Map.class.isAssignableFrom(c);
