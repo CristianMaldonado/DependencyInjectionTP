@@ -1,13 +1,7 @@
 package suicidesquad.primavera.src;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Stack;
-import suicidesquad.primavera.model.Content;
-import suicidesquad.primavera.model.Leaf;
-import suicidesquad.primavera.model.Metadata;
 
 public class Factory {
 	
@@ -15,60 +9,31 @@ public class Factory {
 	public static <T> T getObject(Class<?> classType) {
 
 		Leaf root = createTree(classType);
-		Stack<Content> stack = new Stack<Content>();;
+		Stack<Metadata> stack = new Stack<Metadata>();;
 
 //		root.showTree();
 		
 		postOrder(root, stack);
-		return (T) (root.getContent()).getInstance();
+		return (T) (root).getInstance();
 	}
 
-	private static void postOrder(Leaf leaf, Stack<Content> stack) {
+	private static void postOrder(Leaf leaf, Stack<Metadata> stack) {
 
 		if (leaf != null) {
 
-			leaf.getContent().newInstance();
+			leaf.getMetadata().newInstance();
 
 			for (Leaf child : leaf.getChilds()) {
 
-				stack.push(leaf.getContent());
+				stack.push(leaf.getMetadata());
 				postOrder(child, stack);
 			}
 
 			if (!stack.isEmpty()) {
 
-				Content lastLeafContent = stack.pop();
+				Metadata lastLeafMeta = stack.pop();
 				
-				Object childInstance = leaf.getContent().getInstance();
-
-				for (Field field : lastLeafContent.getMeta().getFieldClass().getDeclaredFields()) {
-
-					if (field.getName().equals(leaf.getContent().getMeta().getName())) {
-						try {
-							
-							Object actualInstance = lastLeafContent.getInstance();
-							
-							field.setAccessible(true);
-							
-							if(leaf.getContent().getMeta().isCollection()) { 
-												
-								List<Object> newList = new ArrayList<Object>();
-								
-								Collection<?> collection = (Collection<?>) field.get(lastLeafContent.getInstance());
-								
-								if(collection != null) newList.addAll(collection);
-								newList.add(childInstance);
-								field.set(actualInstance, newList);
-							} else {								
-								field.set(actualInstance, childInstance);
-							}
-							
-
-						} catch (IllegalArgumentException | IllegalAccessException e) {
-							throw new RuntimeException();
-						}
-					}
-				}
+				lastLeafMeta.createObject(leaf);
 
 			}
 		}
@@ -76,7 +41,7 @@ public class Factory {
 	
 	public static Leaf createTree(Class<?> classType) {
 
-		Leaf root = new Leaf(new Content(new Metadata(classType)));
+		Leaf root = new Leaf(new Metadata(classType));
 		addLeaf(root, classType);
 
 		return root;
@@ -92,7 +57,7 @@ public class Factory {
 							
 				for (int i = 0; i < meta.getCount(); i++) {
 
-					Leaf newLeaf = new Leaf(new Content(meta));
+					Leaf newLeaf = new Leaf(meta);
 					leaf.addLeaf(newLeaf);
 					
 					addLeaf(newLeaf, meta.getFieldClass());

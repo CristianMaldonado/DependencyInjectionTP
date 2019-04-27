@@ -1,36 +1,32 @@
-package suicidesquad.primavera.model;
+package suicidesquad.primavera.src;
 
 import java.util.ArrayList;
 import java.util.Stack;
 
 public class Leaf {
 
-	private Content content;
+	private Metadata metadata;
 	private ArrayList<Leaf> childs;
 	
-	public Leaf(Content content) {
-		this.content = content;
-		this.childs = new ArrayList<Leaf>();
+	public Leaf(Metadata meta) {
+		metadata = meta;
+		childs = new ArrayList<Leaf>();
 	}
 
 	public void addLeaf(Leaf newLeaf) {
-		this.childs.add(newLeaf);
+		childs.add(newLeaf);
 	}
 	
-	public Content getContent() {
-		return content;
+	public Metadata getMetadata() {
+		return metadata;
 	}
-	
-	public void setContent(Content value) {
-		this.content = value;
-	}
-	
+
 	public ArrayList<Leaf> getChilds() {
 		return childs;
 	}
 	
-	public void setChilds(ArrayList<Leaf> childs) {
-		this.childs = childs;
+	public Object getInstance() {
+		return metadata.getInstance();
 	}
 	
 	public void showTree() {
@@ -44,7 +40,7 @@ public class Leaf {
 			Leaf leaf = stack.pop();
 			System.out.println("Nivel: " + nivel);
 			
-			System.out.println("Clase: " + leaf.getContent().getMeta().getFieldClass().toString());
+			System.out.println("Clase: " + leaf.getMetadata());
 			
 
 			if(!leaf.getChilds().isEmpty()) {
@@ -54,12 +50,10 @@ public class Leaf {
 			leaf.getChilds().forEach((child) -> stack.push(child));
 		}
 	}
-	
 
 	@Override
 	public String toString() {
-		return "Leaf (content=" + content + ", childs=" + childs + ")";
+		return "Leaf {metadata=" + metadata + ", childs=" + childs + "}";
 	}
-	
 	
 }

@@ -1,6 +1,6 @@
 package suicidesquad.primavera.main;
 
-import suicidesquad.primavera.src.Auto;
+import suicidesquad.primavera.model.Auto;
 import suicidesquad.primavera.src.Factory;
 
 public class App {

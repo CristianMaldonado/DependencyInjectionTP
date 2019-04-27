@@ -1,14 +1,13 @@
-package suicidesquad.primavera.src;
+package suicidesquad.primavera.model;
 
 import suicidesquad.primavera.annotations.Component;
 
 @Component
-public class Tornillo {
+public class Puerta {
 
 	@Override
 	public String toString() {
-		return "Tornillo";
+		return "Puerta";
 	}
-
 	
 }

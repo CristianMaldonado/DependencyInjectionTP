@@ -1,4 +1,4 @@
-package suicidesquad.primavera.model;
+package suicidesquad.primavera.src;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -11,8 +11,11 @@ public class ListObject extends ObjectType {
 
 	@Override
 	public Object getInstance() {
-		System.out.println("List Object");
-		return null;
+		try {
+			return getFieldClass().newInstance();
+		} catch (InstantiationException | IllegalAccessException e) {
+				throw new RuntimeException();
+		}
 	}
 	
 	@Override

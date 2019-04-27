@@ -1,4 +1,4 @@
-package suicidesquad.primavera.model;
+package suicidesquad.primavera.src;
 
 import java.lang.reflect.Field;
 

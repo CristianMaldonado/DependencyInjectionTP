@@ -1,4 +1,4 @@
-package suicidesquad.primavera.src;
+package suicidesquad.primavera.model;
 
 import suicidesquad.primavera.annotations.Component;
 import suicidesquad.primavera.annotations.Injected;
@@ -11,7 +11,7 @@ public class Rueda {
 
 	@Override
 	public String toString() {
-		return "Rueda [torillo=" + torillo + "]";
+		return "Rueda {torillo=" + torillo + "}";
 	}
 
 

@@ -1,4 +1,4 @@
-package suicidesquad.primavera.src;
+package suicidesquad.primavera.model;
 
 import java.util.ArrayList;
 
@@ -18,7 +18,7 @@ public class Auto {
 
 	@Override
 	public String toString() {
-		return "Auto [rueda=" + rueda + ", puerta=" + puertas + "]";
+		return "Auto {rueda=" + rueda + ", puertas=" + puertas + "}";
 	}
 
 

@@ -1,4 +1,4 @@
-package suicidesquad.primavera.model;
+package suicidesquad.primavera.src;
 
 import java.lang.reflect.Field;
 
@@ -15,8 +15,11 @@ public class SimpleObject extends ObjectType {
 
 	@Override
 	public Object getInstance() {
-		System.out.println("Simple Object");
-		return null;
+		try {
+			return getFieldClass().newInstance();
+		} catch (InstantiationException | IllegalAccessException e) {
+			throw new RuntimeException();
+		}
 	}
 
 

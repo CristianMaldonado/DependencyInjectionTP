@@ -1,10 +1,12 @@
-package suicidesquad.primavera.model;
+package suicidesquad.primavera.src;
 
 import java.lang.reflect.Field;
 
 public abstract class ObjectType {
 
 	protected Field field;
+	
+	public ObjectType() { }
 	
 	public ObjectType(Field field) {
 		this.field = field;
