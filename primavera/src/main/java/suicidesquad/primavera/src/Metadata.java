@@ -1,5 +1,6 @@
 package suicidesquad.primavera.src;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -61,7 +62,11 @@ public class Metadata {
     }
 
     public boolean isCollection() {
-        return array || list;
+        return list;
+    }
+    
+    public boolean isArray() {
+    	return array;
     }
 
     public String getName() {
@@ -88,7 +93,7 @@ public class Metadata {
         return singleton;
     }
 
-    public Object getInstance() {
+	public Object getInstance() {
     	return instance;
     }
     
@@ -100,7 +105,7 @@ public class Metadata {
     	instance = objectType.getInstance();
     }
     
-    public void createObject(Leaf leaf) {
+    public void assignObject(Leaf leaf) {
     	
 		for (Field field : getFieldClass().getDeclaredFields()) {
 
@@ -109,18 +114,40 @@ public class Metadata {
 
 					field.setAccessible(true);
 					
-					if(leaf.getMetadata().isCollection()) { 
+//					Object o = objectType.createInstance(field, leaf, instance);
+//					Esto rompo porque el createInstance retorna un Object pero para arrays necesito Object[]  y para listas List<Object> 
+//					field.set(instance, o);
+					
+					if(leaf.getMetadata().isCollection()) { //TODO Delegar la responsabilidad de la contruccion de los objetos a cada subclase del strategy
 					
 						List<Object> newList = new ArrayList<Object>();
 						
-						Collection<?> collection = (Collection<?>) field.get(getInstance());
+						Collection<?> collection = (Collection<?>) field.get(instance);
 
 						if(collection != null) newList.addAll(collection);
 						newList.add(leaf.getInstance());
 						field.set(instance, newList);
-					} else {								
+					} else if(leaf.getMetadata().isArray()) {
+						
+						Object[] oldArray = (Object[]) field.get(instance);
+						
+						int oldSize = (oldArray != null) ? oldArray.length : 0;
+						
+						Object[] newArray = (Object[]) Array.newInstance(leaf.getMetadata().getFieldClass(), oldSize + 1);
+												
+						if(oldArray != null) {
+							
+							for (int i = 0; i < oldArray.length; i++) {
+								Array.set(newArray, i, oldArray[i]);
+							}
+						}
+						
+						newArray[oldSize] = leaf.getInstance();
+						
+						field.set(instance, newArray);
+					} else {						
 						field.set(instance, leaf.getInstance());
-					}										
+					}
 				} catch (IllegalArgumentException | IllegalAccessException e) {
 					throw new RuntimeException();
 				}

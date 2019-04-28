@@ -33,7 +33,7 @@ public class Factory {
 
 				Metadata lastLeafMeta = stack.pop();
 				
-				lastLeafMeta.createObject(leaf);
+				lastLeafMeta.assignObject(leaf);
 
 			}
 		}

@@ -1,26 +1,28 @@
 package suicidesquad.primavera.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import suicidesquad.primavera.annotations.Injected;
 
 public class Auto {
 
 	@Injected
-	private Rueda rueda;
+	private Motor motor;
+	
+	@Injected(count=4)
+	private Rueda[] ruedas;
 	
 	@Injected(count=2)
-	private ArrayList<Puerta> puertas;
+	private ArrayList<Butaca> butacas;
 
-	public Rueda getRueda() {
-		return this.rueda;
-	}
+	@Injected(implementation=AutoestereoSonyImple.class)
+	private Autoestereo autoestereo;
 
 	@Override
 	public String toString() {
-		return "Auto {rueda=" + rueda + ", puertas=" + puertas + "}";
+		return "{Auto: motor=" + motor + ", ruedas=" + Arrays.toString(ruedas) + ", butacas=" + butacas + ", autoestereo="
+				+ autoestereo + "}";
 	}
-
-
 
 }

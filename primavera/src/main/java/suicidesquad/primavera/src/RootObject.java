@@ -1,5 +1,7 @@
 package suicidesquad.primavera.src;
 
+import java.lang.reflect.Field;
+
 public class RootObject  extends ObjectType {
 
 	private Class<?> rootClass;
@@ -20,6 +22,11 @@ public class RootObject  extends ObjectType {
 	@Override
 	public Class<?> getFieldClass() {
 		return rootClass;
+	}
+
+	@Override
+	public Object createInstance(Field field, Leaf leaf, Object lastInstance) {
+		return leaf.getInstance();
 	}
 
 }

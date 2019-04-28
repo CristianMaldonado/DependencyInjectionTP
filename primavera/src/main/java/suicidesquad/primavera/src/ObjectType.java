@@ -14,4 +14,5 @@ public abstract class ObjectType {
 	
 	public abstract Object getInstance();
 	public abstract Class<?> getFieldClass();
+	public abstract Object createInstance(Field field, Leaf leaf, Object lastInstance) throws IllegalArgumentException, IllegalAccessException;
 }
