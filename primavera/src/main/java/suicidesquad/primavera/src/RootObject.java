@@ -2,7 +2,7 @@ package suicidesquad.primavera.src;
 
 import java.lang.reflect.Field;
 
-public class RootObject  extends ObjectType {
+public class RootObject  extends ObjectType<Object> {
 
 	private Class<?> rootClass;
 	

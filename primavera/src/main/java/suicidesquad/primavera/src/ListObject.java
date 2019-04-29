@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class ListObject extends ObjectType {
+public class ListObject extends ObjectType<List<Object>> {
 
 	public ListObject(Field field) {
 		super(field);
@@ -28,7 +28,7 @@ public class ListObject extends ObjectType {
 	}
 
 	@Override
-	public Object createInstance(Field field, Leaf leaf, Object lastInstance) throws IllegalArgumentException, IllegalAccessException {
+	public List<Object> createInstance(Field field, Leaf leaf, Object lastInstance) throws IllegalArgumentException, IllegalAccessException {
 
 		List<Object> newList = new ArrayList<Object>();
 		

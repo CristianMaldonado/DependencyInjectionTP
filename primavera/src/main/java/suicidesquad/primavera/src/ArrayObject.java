@@ -3,7 +3,7 @@ package suicidesquad.primavera.src;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 
-public class ArrayObject extends ObjectType {
+public class ArrayObject extends ObjectType<Object[]> {
 
 	public ArrayObject(Field field) {
 		super(field);
@@ -24,7 +24,7 @@ public class ArrayObject extends ObjectType {
 	}
 
 	@Override
-	public Object createInstance(Field field, Leaf leaf, Object lastInstance) throws IllegalArgumentException, IllegalAccessException {
+	public Object[] createInstance(Field field, Leaf leaf, Object lastInstance) throws IllegalArgumentException, IllegalAccessException {
 		
 		Object[] oldArray = (Object[]) field.get(lastInstance);
 		

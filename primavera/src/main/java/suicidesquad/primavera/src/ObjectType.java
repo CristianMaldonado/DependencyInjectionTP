@@ -2,7 +2,7 @@ package suicidesquad.primavera.src;
 
 import java.lang.reflect.Field;
 
-public abstract class ObjectType {
+public abstract class ObjectType<T> {
 
 	protected Field field;
 	
@@ -14,5 +14,5 @@ public abstract class ObjectType {
 	
 	public abstract Object getInstance();
 	public abstract Class<?> getFieldClass();
-	public abstract Object createInstance(Field field, Leaf leaf, Object lastInstance) throws IllegalArgumentException, IllegalAccessException;
+	public abstract T createInstance(Field field, Leaf leaf, Object lastInstance) throws IllegalArgumentException, IllegalAccessException;
 }
