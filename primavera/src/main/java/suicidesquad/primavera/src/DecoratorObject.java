@@ -7,7 +7,7 @@ public abstract class DecoratorObject extends ObjectType<Object> {
 	private final ObjectType<?> type;
 	
 	public DecoratorObject(ObjectType<?> type) {
-		super(type.field);
+		super(type.fieldMetadata);
 		this.type = type;
 	}
 	

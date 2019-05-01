@@ -49,11 +49,12 @@ public class ListTest {
         Assert.assertEquals(result.listOfComponentWithFourElements.size(), 4);
     }
 
-    @Test(expected = RuntimeException.class)
-    public void list_throws_error_if_injected_and_component_but_implementation_is_not_specified() {
+    @Test
+    public void list_is_null_if_injected_and_component_but_implementation_is_not_specified() {
         
-        Factory.getObject(BrokenClassImplementationList.class);
+        BrokenClassImplementationList broken = Factory.getObject(BrokenClassImplementationList.class);
         
+        Assert.assertNull(broken.listOfSampleWithoutImplementation);
 //        Assert.fail("Library should have thrown an exception, because Sample is an interface and no concrete implementation is specified.");
     }
 
@@ -64,7 +65,7 @@ public class ListTest {
         
         Assert.assertNotNull(result);
         Assert.assertNotNull(result.listOfFirstSampleWithoutCount);
-        Assert.assertTrue("Sequence should not contain any element.", result.listOfFirstSampleWithoutCount.size() == 0);
+        Assert.assertTrue("Sequence should contain one element.", result.listOfFirstSampleWithoutCount.size() == 1);
     }
 
     @Test

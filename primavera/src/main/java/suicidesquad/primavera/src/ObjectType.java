@@ -4,12 +4,12 @@ import java.lang.reflect.Field;
 
 public abstract class ObjectType<T> {
 
-	protected Field field;
+	protected Metadata fieldMetadata;
 	
 	public ObjectType() { }
 	
-	public ObjectType(Field field) {
-		this.field = field;
+	public ObjectType(Metadata meta) {
+		this.fieldMetadata = meta;
 	}
 	
 	public abstract Object getInstance();

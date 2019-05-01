@@ -15,13 +15,16 @@ public class Auto {
 	
 	@Injected(count=2)
 	private ArrayList<Butaca> butacas;
+	
+	@Injected(implementation=EspejoRetrovisor.class)
+	private ArrayList<Espejo> espejos;
 
 	@Injected(implementation=AutoestereoSonyImple.class)
 	private Autoestereo autoestereo;
 
 	@Override
 	public String toString() {
-		return "{Auto: motor=" + motor + ", ruedas=" + Arrays.toString(ruedas) + ", butacas=" + butacas + ", autoestereo="
+		return "{Auto: motor=" + motor + ", ruedas=" + Arrays.toString(ruedas) + ", butacas=" + butacas + ", espejos=" + espejos + ", autoestereo="
 				+ autoestereo + "}";
 	}
 

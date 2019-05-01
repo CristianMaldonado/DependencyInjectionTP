@@ -6,5 +6,5 @@ import suicidesquad.primavera.annotations.Injected;
 public class BrokenClassImplementationList {
 
     @Injected(count=4)
-    public List<Sample> listOfSampleWithoutImplementation;
+    public List<Sample> listOfSampleWithoutImplementation;    
 }

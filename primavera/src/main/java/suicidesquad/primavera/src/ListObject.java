@@ -8,8 +8,8 @@ import java.util.List;
 
 public class ListObject extends ObjectType<List<Object>> {
 
-	public ListObject(Field field) {
-		super(field);
+	public ListObject(Metadata meta) {
+		super(meta);
 	}
 
 	@Override
@@ -22,10 +22,10 @@ public class ListObject extends ObjectType<List<Object>> {
 	}
 	
 	@Override
-	public Class<?> getFieldClass() {
-        ParameterizedType listType = (ParameterizedType) field.getGenericType();
+	public Class<?> getFieldClass() {//TODO Hay que ver el caso por defecto: List es interfaz y puede colocarse implementation para el list, ej: LinkedList, por defecto es ArrayList
+        ParameterizedType listType = (ParameterizedType) fieldMetadata.getField().getGenericType();
         
-//        System.out.println("Tipo lista: -> " + field.getType() + " es interfaz? " + field.getType().isInterface());
+//        System.out.println("Tipo lista: -> " + fieldMetadata.getField());
         
         Class<?> className = (Class<?>) listType.getActualTypeArguments()[0];
         

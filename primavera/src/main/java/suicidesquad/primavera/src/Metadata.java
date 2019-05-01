@@ -48,18 +48,18 @@ public class Metadata {
         array = field.getType().isArray();
         isInterface = field.getType().isInterface();
         
-        objectType = new SimpleObject(field);
-        
+        objectType = new SimpleObject(this);
+
+        if (list) {
+            objectType = new ListObject(this);
+            isInterface = objectType.getFieldClass().isInterface();
+        } else if (array) {
+            objectType = new ArrayObject(this);
+        }
+    
         if(isInterface) {
         	objectType = new InterfaceObject(objectType);
         }
-
-        if (list) {
-            objectType = new ListObject(field);
-        } else if (array) {
-            objectType = new ArrayObject(field);
-        }
-
         component = objectType.getFieldClass().getAnnotation(Component.class) != null;
     }
 
@@ -114,6 +114,10 @@ public class Metadata {
     public ObjectType<?> getObjectType() {
 		return objectType;
 	}
+    
+    public Field getField() {
+    	return field;
+    }
 
 	public void assignObject(Leaf leaf) {
     	

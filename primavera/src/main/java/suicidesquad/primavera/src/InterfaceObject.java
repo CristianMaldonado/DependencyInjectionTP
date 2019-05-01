@@ -2,8 +2,6 @@ package suicidesquad.primavera.src;
 
 import java.lang.reflect.Field;
 
-import suicidesquad.primavera.model.AutoestereoSonyImple;
-
 public class InterfaceObject extends DecoratorObject {
 
 	public InterfaceObject(ObjectType<?> objectType) {
@@ -20,11 +18,8 @@ public class InterfaceObject extends DecoratorObject {
 	}
 
 	@Override
-	public Class<?> getFieldClass() { //TODO retornar la instancia de la implementation
-		
-		System.out.println("FIeld " + field);
-		
-		return AutoestereoSonyImple.class;
+	public Class<?> getFieldClass() {
+		return fieldMetadata.getImplementation();
 	}
 
 	@Override

@@ -5,8 +5,8 @@ import java.lang.reflect.Field;
 
 public class ArrayObject extends ObjectType<Object[]> {
 
-	public ArrayObject(Field field) {
-		super(field);
+	public ArrayObject(Metadata meta) {
+		super(meta);
 	}
 
 	@Override
@@ -20,7 +20,7 @@ public class ArrayObject extends ObjectType<Object[]> {
 
 	@Override
 	public Class<?> getFieldClass() {
-		return field.getType().getComponentType();
+		return fieldMetadata.getField().getType().getComponentType();
 	}
 
 	@Override
