@@ -46,16 +46,16 @@ public class Metadata {
 
         list = isClassCollection(field.getType());
         array = field.getType().isArray();
-        isInterface = field.getType().isInterface();
         
         objectType = new SimpleObject(this);
 
         if (list) {
             objectType = new ListObject(this);
-            isInterface = objectType.getFieldClass().isInterface();
         } else if (array) {
             objectType = new ArrayObject(this);
         }
+        
+        isInterface = objectType.getFieldClass().isInterface();
     
         if(isInterface) {
         	objectType = new InterfaceObject(objectType);

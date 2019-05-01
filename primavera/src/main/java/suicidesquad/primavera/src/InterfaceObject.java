@@ -18,8 +18,13 @@ public class InterfaceObject extends DecoratorObject {
 	}
 
 	@Override
-	public Class<?> getFieldClass() {
-		return fieldMetadata.getImplementation();
+	public Class<?> getFieldClass() {//TODO cuando la interfaz tiene una sola implementacion -> getImplementation esta vacio -> Tengo que fijarme la clase que lo implementa
+		Metadata m = fieldMetadata;
+		
+		if(m.getImplementation() == null) {
+			throw new RuntimeException();
+		}
+		return m.getImplementation(); 
 	}
 
 	@Override

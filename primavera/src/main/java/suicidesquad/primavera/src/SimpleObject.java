@@ -16,7 +16,10 @@ public class SimpleObject extends ObjectType<Object> {
 	@Override
 	public Object getInstance() {
 		try {
-			return this.getFieldClass().newInstance();
+			if(fieldMetadata.getCount() > 1) {
+				throw new RuntimeException();
+			}
+			return getFieldClass().newInstance();
 		} catch (InstantiationException | IllegalAccessException e) {
 			throw new RuntimeException();
 		}

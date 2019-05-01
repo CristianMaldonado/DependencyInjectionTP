@@ -10,4 +10,10 @@ public class SampleClass {
     public NestedClassComponent componentNotInjected;
 
     public NestedClassNotComponent notComponent;
+    
+    @Injected
+    public Sample interfaceComponent;
+    
+    @Injected(implementation=FirstSample.class)
+    public Sample interfaceComponentWithImplementation;
 }
