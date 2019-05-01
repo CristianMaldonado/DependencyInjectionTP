@@ -1,5 +1,13 @@
 package suicidesquad.primavera.model;
 
-public interface AutoestereoSonyImple {
+import suicidesquad.primavera.annotations.Component;
+
+@Component
+public class AutoestereoSonyImple implements Autoestereo {
+
+	@Override
+	public String toString() {
+		return "{Autoestereo Sony}";
+	}
 
 }

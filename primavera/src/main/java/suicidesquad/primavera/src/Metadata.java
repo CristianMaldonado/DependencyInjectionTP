@@ -26,6 +26,7 @@ public class Metadata {
     private int count;
     private boolean component;
     private boolean singleton;
+    private boolean isInterface;
     private Class<?> implementation;
     private ObjectType<?> objectType;
     
@@ -45,8 +46,13 @@ public class Metadata {
 
         list = isClassCollection(field.getType());
         array = field.getType().isArray();
-
+        isInterface = field.getType().isInterface();
+        
         objectType = new SimpleObject(field);
+        
+        if(isInterface) {
+        	objectType = new InterfaceObject(objectType);
+        }
 
         if (list) {
             objectType = new ListObject(field);
@@ -63,6 +69,10 @@ public class Metadata {
     
     public boolean isArray() {
     	return array;
+    }
+    
+    public boolean isInterface() {
+    	return isInterface;
     }
 
     public String getName() {

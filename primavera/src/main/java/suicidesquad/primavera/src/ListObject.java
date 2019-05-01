@@ -23,13 +23,26 @@ public class ListObject extends ObjectType<List<Object>> {
 	
 	@Override
 	public Class<?> getFieldClass() {
-        ParameterizedType listType = (ParameterizedType) this.field.getGenericType();
-        return (Class<?>) listType.getActualTypeArguments()[0];
+        ParameterizedType listType = (ParameterizedType) field.getGenericType();
+        
+//        System.out.println("Tipo lista: -> " + field.getType() + " es interfaz? " + field.getType().isInterface());
+        
+        Class<?> className = (Class<?>) listType.getActualTypeArguments()[0];
+        
+//        System.out.println("Clase de la lista: -> " + className);
+//        
+//        if(className.isInterface()) {
+//        	//Tengo que retornar la clase de la implementacion
+//        	System.out.println("Clase : -> " + className);
+//        }
+        return className;
 	}
 
 	@Override
 	public List<Object> createInstance(Field field, Leaf leaf, Object lastInstance) throws IllegalArgumentException, IllegalAccessException {
 
+		//Si tiene implementation || la clase es una interfaz y solo hay una clase que la implementa => Tengo que usar la clase de la Subclase que implementa la interfaz
+				
 		List<Object> newList = new ArrayList<Object>();
 		
 		Collection<?> collection = (Collection<?>) field.get(lastInstance);

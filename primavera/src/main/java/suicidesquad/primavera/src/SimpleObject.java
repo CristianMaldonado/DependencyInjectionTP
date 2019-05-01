@@ -24,7 +24,7 @@ public class SimpleObject extends ObjectType<Object> {
 
 	@Override
 	public Object createInstance(Field field, Leaf leaf, Object lastInstance) throws IllegalArgumentException, IllegalAccessException {
-		return leaf.getInstance();
+		return  leaf.getInstance();
 	}
 
 }
