@@ -7,7 +7,7 @@ import suicidesquad.primavera.annotations.Injected;
 
 public class Auto {
 
-	@Injected
+	@Injected(singleton=true)
 	private Motor motor;
 	
 	@Injected(count=4)

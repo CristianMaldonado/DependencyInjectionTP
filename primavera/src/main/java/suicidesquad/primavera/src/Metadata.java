@@ -55,10 +55,14 @@ public class Metadata {
             objectType = new ArrayObject(this);
         }
         
+//        isInterface = objectType.getFieldClass().isInterface() || implementation != null;
         isInterface = objectType.getFieldClass().isInterface();
     
         if(isInterface) {
         	objectType = new InterfaceObject(objectType);
+        }
+        if(singleton) {
+        	objectType = new SingletonObject(objectType);
         }
         component = objectType.getFieldClass().getAnnotation(Component.class) != null;
     }
