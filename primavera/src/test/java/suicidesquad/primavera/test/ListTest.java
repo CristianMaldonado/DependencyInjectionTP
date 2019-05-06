@@ -3,8 +3,8 @@ package suicidesquad.primavera.test;
 import org.junit.Assert;
 import org.junit.Test;
 
-import suicidesquad.primavera.model.*;
 import suicidesquad.primavera.src.Factory;
+import suicidesquad.primavera.test.model.*;
 
 public class ListTest {
 

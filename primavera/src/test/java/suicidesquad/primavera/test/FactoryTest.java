@@ -3,19 +3,19 @@ package suicidesquad.primavera.test;
 import org.junit.Assert;
 import org.junit.Test;
 
-import suicidesquad.primavera.model.BrokenClassImplementation;
-import suicidesquad.primavera.model.BrokenClassImplementationWithObject;
-import suicidesquad.primavera.model.BrokenClassSingleton;
-import suicidesquad.primavera.model.BrokenClassWithCount;
-import suicidesquad.primavera.model.CanNotInstantiateClass;
-import suicidesquad.primavera.model.FirstSample;
-import suicidesquad.primavera.model.NestedClassComponent;
-import suicidesquad.primavera.model.OneImplementationClass;
-import suicidesquad.primavera.model.SampleClass;
-import suicidesquad.primavera.model.SampleClassImplementation;
-import suicidesquad.primavera.model.SampleClassSingleton;
-import suicidesquad.primavera.model.SimpleClassImplementationSingleton;
 import suicidesquad.primavera.src.Factory;
+import suicidesquad.primavera.test.model.BrokenClassImplementation;
+import suicidesquad.primavera.test.model.BrokenClassImplementationWithObject;
+import suicidesquad.primavera.test.model.BrokenClassSingleton;
+import suicidesquad.primavera.test.model.BrokenClassWithCount;
+import suicidesquad.primavera.test.model.CanNotInstantiateClass;
+import suicidesquad.primavera.test.model.FirstSample;
+import suicidesquad.primavera.test.model.NestedClassComponent;
+import suicidesquad.primavera.test.model.OneImplementationClass;
+import suicidesquad.primavera.test.model.SampleClass;
+import suicidesquad.primavera.test.model.SampleClassImplementation;
+import suicidesquad.primavera.test.model.SampleClassSingleton;
+import suicidesquad.primavera.test.model.SimpleClassImplementationSingleton;
 
 public class FactoryTest {
 
@@ -100,10 +100,10 @@ public class FactoryTest {
     @Test
     public void factoryCreateAnInstanceOfAnAtributeThatIsOfTypeInterfaceWithAnImplementationWithoutSpecifyingImplementation() {
     	// el atributo es de tipo interfaz con una implementacion sin especificar implementation -> tiene que retornar el objeto
-//    	SampleClassImplementation result = Factory.getObject(SampleClassImplementation.class);
-//    	
-//    	Assert.assertNotNull(result.interfaceWithOneImplementation);
-//    	Assert.assertEquals(OneImplementationClass.class, result.interfaceWithOneImplementation.getClass());
+    	SampleClassImplementation result = Factory.getObject(SampleClassImplementation.class);
+    	
+    	Assert.assertNotNull(result.interfaceWithOneImplementation);
+    	Assert.assertEquals(OneImplementationClass.class, result.interfaceWithOneImplementation.getClass());
     }
     
     @Test
