@@ -11,21 +11,18 @@ public class SingletonObject extends DecoratorObject {
 	}
 	
 	public Object getInstance() {
-		if(singletonInstance == null) {			
-			try {
-				if(fieldMetadata.getCount() > 1) {
-					throw new RuntimeException();
-				}
-				singletonInstance = getFieldClass().newInstance();
-			} catch (InstantiationException | IllegalAccessException e) {
-				throw new RuntimeException();
-			}
+		
+		if(singletonInstance == null) {
+			
+			singletonInstance = super.getInstance();
 		}
 		return singletonInstance;
 	}
+	
 	public Class<?> getFieldClass() {
 		return super.getFieldClass();
 	}
+	
 	public Object createInstance(Field field, Leaf leaf, Object lastInstance) throws IllegalArgumentException, IllegalAccessException {
 		return super.createInstance(field, leaf, lastInstance); 
 	}

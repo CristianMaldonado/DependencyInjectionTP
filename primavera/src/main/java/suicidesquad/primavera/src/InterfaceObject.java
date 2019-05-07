@@ -30,49 +30,35 @@ public class InterfaceObject extends DecoratorObject {
 		
 		Class<?> interfaceClass = super.getFieldClass();
 		
-		int contadorImplementaciones = 0;
-		Class<?> claseConUnaImplementacion = Object.class;
+		int implementationsCount = 0;
+		Class<?> classWithOneImplementation = fieldMetadata.getImplementation();
 		
 		try {
-			Class<?>[] clases = getClasses(interfaceClass.getPackage().getName());
-						
-			for (Class<?> clase : clases) {
+			Class<?>[] classesInThePackage = getClasses(interfaceClass.getPackage().getName());
+			Class<?> classThatImplementsTheInterface = Object.class;
+			
+			for (Class<?> classType : classesInThePackage) {
 				
-				if(!clase.isInterface()) {
+				if(!classType.isInterface()) {
 					
-					for(Class<?> interfaz : clase.getInterfaces()) {
+					for(Class<?> interfaz : classType.getInterfaces()) {
 						if(interfaz.getName().equals(interfaceClass.getName())) {
-							contadorImplementaciones++;
-							System.out.println("Contador => " + contadorImplementaciones);
-							System.out.println("Clase Concreta => " + clase.getName());
-							claseConUnaImplementacion = clase;
+							implementationsCount++;
+							classThatImplementsTheInterface = classType;
 						}
 					}
 				}
-				
-				
-				
-//				System.out.println("Clase->" + clase);
 			}
 			
-			if(contadorImplementaciones == 1) {
-				return claseConUnaImplementacion;
+			if(implementationsCount == 1) {
+				classWithOneImplementation = classThatImplementsTheInterface;
 			}
 			
 		} catch (ClassNotFoundException | IOException e) {
-			e.printStackTrace();
-		}
-		
-//		Class<?>[] implementations = fieldClass.getInterfaces();
-//		boolean classImplementsTheInterface = false; 
-//		for(int i = 0; i < implementations.length; i++) {
-//			if(implementations[i] == interfaceClass) classImplementsTheInterface = true;
-//		}
-		
-		if(fieldMetadata.getImplementation() == null) {
 			throw new RuntimeException();
 		}
-		return fieldMetadata.getImplementation(); 
+
+		return classWithOneImplementation; 
 	}
 
 	@Override
@@ -80,15 +66,6 @@ public class InterfaceObject extends DecoratorObject {
 		return super.createInstance(field, leaf, lastInstance);
 	}
 	
-	
-	/**
-	 * Scans all classes accessible from the context class loader which belong to the given package and subpackages.
-	 *
-	 * @param packageName The base package
-	 * @return The classes
-	 * @throws ClassNotFoundException
-	 * @throws IOException
-	 */
 	private Class<?>[] getClasses(String packageName) throws ClassNotFoundException, IOException {
 	    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 	    assert classLoader != null;
@@ -106,14 +83,7 @@ public class InterfaceObject extends DecoratorObject {
 	    return classes.toArray(new Class[classes.size()]);
 	}
 
-	/**
-	 * Recursive method used to find all classes in a given directory and subdirs.
-	 *
-	 * @param directory   The base directory
-	 * @param packageName The package name for classes found inside the base directory
-	 * @return The classes
-	 * @throws ClassNotFoundException
-	 */
+	
 	private List<Class<?>> findClasses(File directory, String packageName) throws ClassNotFoundException {
 	    List<Class<?>> classes = new ArrayList<Class<?>>();
 	    if (!directory.exists()) {

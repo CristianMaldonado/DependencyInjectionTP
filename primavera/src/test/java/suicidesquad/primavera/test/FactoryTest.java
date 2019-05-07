@@ -5,7 +5,6 @@ import org.junit.Test;
 
 import suicidesquad.primavera.src.Factory;
 import suicidesquad.primavera.test.model.BrokenClassImplementation;
-import suicidesquad.primavera.test.model.BrokenClassImplementationWithObject;
 import suicidesquad.primavera.test.model.BrokenClassSingleton;
 import suicidesquad.primavera.test.model.BrokenClassWithCount;
 import suicidesquad.primavera.test.model.CanNotInstantiateClass;
