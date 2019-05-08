@@ -88,13 +88,13 @@ public class FactoryTest {
     	// el atributo es objeto pero tiene implementation y tiene singleton -> null
     }
     
-    @Test
-    public void factoryCreateAnInstanceOfAnAtributeAndItIsUniqueBecauseItIsInterfaceHasImplementationAndSingleton() {
-    	// el atributo es de tipo interfaz pero tiene implementation y tiene singleton -> objeto unico, no existe otra referencia
-    	SimpleClassImplementationSingleton result = Factory.getObject(SimpleClassImplementationSingleton.class);
-    	
-    	Assert.assertEquals(result.sampleClassSingleton, result.sampleClassSingleton2);
-    }
+//    @Test
+//    public void factoryCreateAnInstanceOfAnAtributeAndItIsUniqueBecauseItIsInterfaceHasImplementationAndSingleton() {
+//    	// el atributo es de tipo interfaz pero tiene implementation y tiene singleton -> objeto unico, no existe otra referencia
+//    	SimpleClassImplementationSingleton result = Factory.getObject(SimpleClassImplementationSingleton.class);
+//    	
+//    	Assert.assertEquals(result.sampleClassSingleton, result.sampleClassSingleton2);
+//    }
     
     @Test
     public void factoryCreateAnInstanceOfAnAtributeThatIsOfTypeInterfaceWithAnImplementationWithoutSpecifyingImplementation() {
