@@ -43,6 +43,8 @@ public class ListObject extends ObjectType<List<Object>> {
 
 		//Si tiene implementation || la clase es una interfaz y solo hay una clase que la implementa => Tengo que usar la clase de la Subclase que implementa la interfaz
 				
+		System.out.println("-------" + leaf.getMetadata().getImplementation());
+		
 		List<Object> newList = new ArrayList<Object>();
 		
 		Collection<?> collection = (Collection<?>) field.get(lastInstance);

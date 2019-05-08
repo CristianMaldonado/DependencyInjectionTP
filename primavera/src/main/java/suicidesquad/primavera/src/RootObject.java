@@ -2,7 +2,7 @@ package suicidesquad.primavera.src;
 
 import java.lang.reflect.Field;
 
-public class RootObject  extends ObjectType<Object> {
+public class RootObject  extends ObjectType<Object> {//TODO Ahora puede tener @Component para especificar Singleton
 
 	private Class<?> rootClass;
 	

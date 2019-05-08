@@ -2,7 +2,7 @@ package suicidesquad.primavera.src;
 
 import java.lang.reflect.Field;
 
-public class SingletonObject extends DecoratorObject {
+public class SingletonObject extends DecoratorObject {//TODO Ahora Singleton se aplica sobre @Component ya no se aplica en @Injected
 
 	private static Object singletonInstance = null;
 	
