@@ -53,5 +53,21 @@ public class ListObject extends ObjectType<List<Object>> {
 		newList.add(leaf.getInstance());
 		return newList;
 	}
+	
+	
+	
+//	divide y conquista
+	
+//	ej: quicksort -> disminuye el volumen de los datos, para bajar la complejidad del ordenamiento, 
+//	otra estrategia: algoritmos voraces solucion es un conjunto de valores  -> cumlen con : 
+//	- funcion de seleccion 
+//	- funcion de factibilidad
+//	- funcion solucion
+//	- funcuin que busca optimizar el resultado
 
+//programacion dinamica -> pongo en memoria valores ya calculados
+//	ej de parcial -> nos da una matriz y me pide el recorrido que haria el algoritmo en la matriz booleanda (haciendo el camino con una flecha)
 }
+
+
+
