@@ -35,6 +35,7 @@ public class Metadata {
     private void initializeObject(Field field) {
 
         Injected injectedAnnotation = field.getAnnotation(Injected.class);
+        Component componentAnnotation;
 
         if (injectedAnnotation == null)
             return;
@@ -42,7 +43,6 @@ public class Metadata {
         injected = true;
         count = injectedAnnotation.count();
         implementation = injectedAnnotation.implementation();
-        singleton = injectedAnnotation.singleton();
 
         list = isClassCollection(field.getType());
         array = field.getType().isArray();
@@ -61,10 +61,17 @@ public class Metadata {
         if(isInterface) {
         	objectType = new InterfaceObject(objectType);
         }
+        
+        componentAnnotation = objectType.getFieldClass().getAnnotation(Component.class);
+        component = componentAnnotation != null;
+        
+        if(component) {
+        	singleton = componentAnnotation.singleton();        	
+        }
+   
         if(singleton) {
         	objectType = new SingletonObject(objectType);
         }
-        component = objectType.getFieldClass().getAnnotation(Component.class) != null;
     }
 
     public boolean isCollection() {

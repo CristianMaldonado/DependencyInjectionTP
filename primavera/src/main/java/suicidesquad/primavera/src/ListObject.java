@@ -8,8 +8,11 @@ import java.util.List;
 
 public class ListObject extends ObjectType<List<Object>> {
 
+	private Class<?> listClass;
+	
 	public ListObject(Metadata meta) {
 		super(meta);
+		listClass = ArrayList.class;
 	}
 
 	@Override
@@ -22,30 +25,31 @@ public class ListObject extends ObjectType<List<Object>> {
 	}
 	
 	@Override
-	public Class<?> getFieldClass() {//TODO Hay que ver el caso por defecto: List es interfaz y puede colocarse implementation para el list, ej: LinkedList, por defecto es ArrayList
+	public Class<?> getFieldClass() {
         ParameterizedType listType = (ParameterizedType) fieldMetadata.getField().getGenericType();
         
-//        System.out.println("Tipo lista: -> " + fieldMetadata.getField());
-        
         Class<?> className = (Class<?>) listType.getActualTypeArguments()[0];
-        
-//        System.out.println("Clase de la lista: -> " + className);
-//        
-//        if(className.isInterface()) {
-//        	//Tengo que retornar la clase de la implementacion
-//        	System.out.println("Clase : -> " + className);
-//        }
+
         return className;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Object> createInstance(Field field, Leaf leaf, Object lastInstance) throws IllegalArgumentException, IllegalAccessException {
 
-		//Si tiene implementation || la clase es una interfaz y solo hay una clase que la implementa => Tengo que usar la clase de la Subclase que implementa la interfaz
-				
-		System.out.println("-------" + leaf.getMetadata().getImplementation());
+		List<Object> newList = null;		
 		
-		List<Object> newList = new ArrayList<Object>();
+		if(!leaf.getMetadata().getImplementation().equals(Object.class)) {
+		
+			listClass = leaf.getMetadata().getImplementation();
+		}
+		
+		try {
+			newList = (List<Object>) listClass.newInstance();
+			
+		} catch (InstantiationException e) {
+			throw new RuntimeException();
+		}
 		
 		Collection<?> collection = (Collection<?>) field.get(lastInstance);
 

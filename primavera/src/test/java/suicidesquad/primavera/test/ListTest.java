@@ -1,5 +1,8 @@
 package suicidesquad.primavera.test;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -76,4 +79,12 @@ public class ListTest {
         Assert.assertNotNull(result.listOfComponentWithFourElements);
         Assert.assertEquals(result.listOfComponentWithFourElements.size(), 4);
     }
+    
+     @Test
+     public void listHasTheSameClassAsTheImplementation() {
+    	 SampleClassAnotherListClass result = Factory.getObject(SampleClassAnotherListClass.class);
+    	 Assert.assertEquals(LinkedList.class, result.linkedListComponent.getClass());
+    	 Assert.assertEquals(ArrayList.class, result.defaultListComponent.getClass());
+    	 Assert.assertEquals(ArrayList.class, result.arrayListComponent.getClass());
+     }
 }

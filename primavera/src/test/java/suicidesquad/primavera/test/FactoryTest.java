@@ -14,7 +14,6 @@ import suicidesquad.primavera.test.model.OneImplementationClass;
 import suicidesquad.primavera.test.model.SampleClass;
 import suicidesquad.primavera.test.model.SampleClassImplementation;
 import suicidesquad.primavera.test.model.SampleClassSingleton;
-import suicidesquad.primavera.test.model.SimpleClassImplementationSingleton;
 
 public class FactoryTest {
 
@@ -72,7 +71,7 @@ public class FactoryTest {
     	
     	SampleClassSingleton result = Factory.getObject(SampleClassSingleton.class);
     	
-    	Assert.assertEquals(result.nestedClassComponent, result.nestedClassComponent2);
+    	Assert.assertEquals(result.nestedClassSingleton, result.nestedClassSingleton2);
     }
     
     @Test
@@ -87,15 +86,7 @@ public class FactoryTest {
     public void factoryDontCreateAnInstanceOfAnAtributeBecauseItIsNotAnInterfaceHasImplementationAndSingleton() {
     	// el atributo es objeto pero tiene implementation y tiene singleton -> null
     }
-    
-//    @Test
-//    public void factoryCreateAnInstanceOfAnAtributeAndItIsUniqueBecauseItIsInterfaceHasImplementationAndSingleton() {
-//    	// el atributo es de tipo interfaz pero tiene implementation y tiene singleton -> objeto unico, no existe otra referencia
-//    	SimpleClassImplementationSingleton result = Factory.getObject(SimpleClassImplementationSingleton.class);
-//    	
-//    	Assert.assertEquals(result.sampleClassSingleton, result.sampleClassSingleton2);
-//    }
-    
+
     @Test
     public void factoryCreateAnInstanceOfAnAtributeThatIsOfTypeInterfaceWithAnImplementationWithoutSpecifyingImplementation() {
     	// el atributo es de tipo interfaz con una implementacion sin especificar implementation -> tiene que retornar el objeto

@@ -2,7 +2,7 @@ package suicidesquad.primavera.model;
 
 import suicidesquad.primavera.annotations.Component;
 
-@Component
+@Component(singleton=true)
 public class Motor {
 
 	@Override

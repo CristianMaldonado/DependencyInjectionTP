@@ -4,10 +4,10 @@ import suicidesquad.primavera.annotations.Injected;
 
 public class SampleClassSingleton {
 
-	@Injected(singleton=true)
-	public NestedClassComponent nestedClassComponent;
+	@Injected
+	public NestedClassSingleton nestedClassSingleton;
 	
-	@Injected(singleton=true)
-	public NestedClassComponent nestedClassComponent2;
+	@Injected
+	public NestedClassSingleton nestedClassSingleton2;
 	
 }

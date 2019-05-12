@@ -24,11 +24,12 @@ public class InterfaceObject extends DecoratorObject {
 	}
 
 	@Override
-	public Class<?> getFieldClass() {//TODO cuando la interfaz tiene una sola implementacion -> getImplementation esta vacio -> Tengo que fijarme la clase que lo implementa
-		
-//		Class<?> fieldClass = fieldMetadata.getImplementation(); // Cuando no esta viene por defecto Object.class (No me sirve)
+	public Class<?> getFieldClass() {
 		
 		Class<?> interfaceClass = super.getFieldClass();
+		if(interfaceClass.isArray()) {
+			return interfaceClass;
+		}
 		
 		int implementationsCount = 0;
 		Class<?> classWithOneImplementation = fieldMetadata.getImplementation();

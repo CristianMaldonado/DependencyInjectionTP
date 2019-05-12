@@ -17,5 +17,4 @@ public @interface Injected {
 
 	int count() default 1;
 	Class<?> implementation() default Object.class;
-	boolean singleton() default false;
 }

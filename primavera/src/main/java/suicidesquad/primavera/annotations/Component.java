@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface Component {
-
-	//TODO por el momento deberia ir vacio, ya que solo me sirve para saber que clases se inyectan
+	
+	boolean singleton() default false;
 
 }
