@@ -24,40 +24,41 @@ public class InterfaceObject extends DecoratorObject {
 	}
 
 	@Override
-	public Class<?> getFieldClass() {
+	public Class<?> getFieldClass() {//TODO aca esta el error, la primera vez se fija si y me retorna la clase de la interfaz, pero cuando el array es List(interfaz) => me deriva al createInstance de ListObject con la clase de la interfaz cargada y no con la clase de la lista
 		
 		Class<?> interfaceClass = super.getFieldClass();
-		if(interfaceClass.isArray()) {
-			return interfaceClass;
-		}
-		
+		if(interfaceClass.isArray()) return interfaceClass;
+				
 		int implementationsCount = 0;
 		Class<?> classWithOneImplementation = fieldMetadata.getImplementation();
 		
-		try {
-			Class<?>[] classesInThePackage = getClasses(interfaceClass.getPackage().getName());
-			Class<?> classThatImplementsTheInterface = Object.class;
-			
-			for (Class<?> classType : classesInThePackage) {
+		if(classWithOneImplementation == Object.class) {			
+			try {
+				Class<?>[] classesInThePackage = getClasses(interfaceClass.getPackage().getName());
+				Class<?> classThatImplementsTheInterface = Object.class;
 				
-				if(!classType.isInterface()) {
+				for (Class<?> classType : classesInThePackage) {
 					
-					for(Class<?> interfaz : classType.getInterfaces()) {
-						if(interfaz.getName().equals(interfaceClass.getName())) {
-							implementationsCount++;
-							classThatImplementsTheInterface = classType;
+					if(!classType.isInterface()) {
+						
+						for(Class<?> interfaz : classType.getInterfaces()) {
+							if(interfaz.getName().equals(interfaceClass.getName())) {
+								implementationsCount++;
+								classThatImplementsTheInterface = classType;
+							}
 						}
 					}
 				}
+				
+				if(implementationsCount == 1) {
+					classWithOneImplementation = classThatImplementsTheInterface;
+				}
+				
+			} catch (ClassNotFoundException | IOException e) {
+				throw new RuntimeException();
 			}
-			
-			if(implementationsCount == 1) {
-				classWithOneImplementation = classThatImplementsTheInterface;
-			}
-			
-		} catch (ClassNotFoundException | IOException e) {
-			throw new RuntimeException();
 		}
+		
 
 		return classWithOneImplementation; 
 	}
