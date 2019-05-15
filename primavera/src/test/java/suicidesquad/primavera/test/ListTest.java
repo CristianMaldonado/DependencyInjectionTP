@@ -64,7 +64,7 @@ public class ListTest {
     @Test
     public void list_is_not_null_if_injected_and_component_without_count_with_implementation() {
 
-        SampleClassList result = Factory.getObject(SampleClassList.class);
+    	SampleListImplementationClass result = Factory.getObject(SampleListImplementationClass.class);
         
         Assert.assertNotNull(result);
         Assert.assertNotNull(result.listOfFirstSampleWithoutCount);
